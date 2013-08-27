@@ -9,12 +9,14 @@
 
 #include "DeleteNamedVariableListRequest.h"
 
-static int asn_DFL_2_set_0(int set_value, void **sptr) {
-	INTEGER_t *st = *sptr;
+static int asn_DFL_2_set_0(int set_value, void **sptr) 
+{
+	INTEGER_t *st = (INTEGER_t *) *sptr;
 	
-	if(!st) {
+	if(!st) 
+	{
 		if(!set_value) return -1;	/* Not a default value */
-		st = (*sptr = CALLOC(1, sizeof(*st)));
+		st = (INTEGER_t *) (*sptr = CALLOC(1, sizeof(*st)));
 		if(!st) return -1;
 	}
 	

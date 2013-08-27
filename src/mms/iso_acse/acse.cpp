@@ -227,9 +227,9 @@ parseAarqPdu(AcseConnection* self, uint8_t* buffer, int bufPos, int maxBufPos)
 	if (DEBUG) printf("ACSE: parse AARQ PDU\n");
 
 	uint8_t* authValue = NULL;
-	int authValueLen;
+	int authValueLen = 0;
 	uint8_t* authMechanism = NULL;
-	int authMechLen;
+	int authMechLen = 0;
 	bool userInfoValid = false;
 
 	while (bufPos < maxBufPos) {

@@ -29,6 +29,8 @@
 
 #if MMS_DATA_SET_SERVICE == 1
 
+char* mmsMsg_createStringFromAsnIdentifier(Identifier_t identifier);
+
 static void
 createDeleteNamedVariableListResponse(uint32_t invokeId, ByteBuffer* response,
         uint32_t numberMatched, uint32_t numberDeleted)
@@ -66,22 +68,22 @@ createDeleteNamedVariableListResponse(uint32_t invokeId, ByteBuffer* response,
 
 void
 mmsServer_handleDeleteNamedVariableListRequest(MmsServerConnection* connection,
-		uint8_t* buffer, int bufPos, int maxBufPos,
-		int invokeId,
-		ByteBuffer* response)
+															  uint8_t* buffer, int bufPos, int maxBufPos,
+															  int invokeId,
+															  ByteBuffer* response)
 {
 	//TODO implement for association specific named variable lists
 
 
 	DeleteNamedVariableListRequest_t* request = 0;
 
-    MmsPdu_t* mmsPdu = 0;
+	MmsPdu_t* mmsPdu = 0;
 
-    asn_dec_rval_t rval; /* Decoder return value  */
+	asn_dec_rval_t rval; /* Decoder return value  */
 
-    rval = ber_decode(NULL, &asn_DEF_MmsPdu, (void**) &mmsPdu, buffer, maxBufPos);
+	rval = ber_decode(NULL, &asn_DEF_MmsPdu, (void**) &mmsPdu, buffer, maxBufPos);
 
-    request = &(mmsPdu->choice.confirmedRequestPdu.confirmedServiceRequest.choice.deleteNamedVariableList);
+	request = &(mmsPdu->choice.confirmedRequestPdu.confirmedServiceRequest.choice.deleteNamedVariableList);
 
 
 	long scopeOfDelete;
@@ -101,12 +103,12 @@ mmsServer_handleDeleteNamedVariableListRequest(MmsServerConnection* connection,
 		for (i = 0; i < numberItems; i++) {
 			if (request->listOfVariableListName->list.array[i]->present == ObjectName_PR_domainspecific) {
 				char* domainId = mmsMsg_createStringFromAsnIdentifier(
-						request->listOfVariableListName->list.array[i]->choice.domainspecific.domainId);
+					request->listOfVariableListName->list.array[i]->choice.domainspecific.domainId);
 
 				MmsDomain* domain = MmsDevice_getDomain(device, domainId);
 
 				char* itemId = mmsMsg_createStringFromAsnIdentifier(
-						request->listOfVariableListName->list.array[i]->choice.domainspecific.itemId);
+					request->listOfVariableListName->list.array[i]->choice.domainspecific.itemId);
 
 				MmsNamedVariableList variableList = MmsDomain_getNamedVariableList(domain, itemId);
 
@@ -124,7 +126,7 @@ mmsServer_handleDeleteNamedVariableListRequest(MmsServerConnection* connection,
 			}
 			else if (request->listOfVariableListName->list.array[i]->present == ObjectName_PR_aaspecific) {
 				char* itemId = mmsMsg_createStringFromAsnIdentifier(
-						request->listOfVariableListName->list.array[i]->choice.aaspecific);
+					request->listOfVariableListName->list.array[i]->choice.aaspecific);
 
 				MmsNamedVariableList variableList = MmsServerConnection_getNamedVariableList(connection, itemId);
 
@@ -146,7 +148,7 @@ mmsServer_handleDeleteNamedVariableListRequest(MmsServerConnection* connection,
 		mmsServer_createConfirmedErrorPdu(invokeId, response, MMS_ERROR_TYPE_OBJECT_ACCESS_UNSUPPORTED);
 	}
 
-    asn_DEF_MmsPdu.free_struct(&asn_DEF_MmsPdu, mmsPdu, 0);
+	asn_DEF_MmsPdu.free_struct(&asn_DEF_MmsPdu, mmsPdu, 0);
 }
 
 static void
@@ -360,7 +362,7 @@ createGetNamedVariableListAttributesResponse(int invokeId, ByteBuffer* response,
 	varListResponse->listOfVariable.list.count = variableCount;
 	varListResponse->listOfVariable.list.size = variableCount;
 
-	varListResponse->listOfVariable.list.array = calloc(variableCount, sizeof(void*));
+	varListResponse->listOfVariable.list.array = (GetNamedVariableListAttributesResponse__listOfVariable__Member **) calloc(variableCount, sizeof(void*));
 
 	LinkedList variable = LinkedList_getNext(variables);
 
@@ -368,7 +370,7 @@ createGetNamedVariableListAttributesResponse(int invokeId, ByteBuffer* response,
 	for (i = 0; i < variableCount; i++) {
 		MmsNamedVariableListEntry variableEntry = (MmsNamedVariableListEntry) variable->data;
 
-		varListResponse->listOfVariable.list.array[i] =  calloc(1,
+		varListResponse->listOfVariable.list.array[i] = (GetNamedVariableListAttributesResponse__listOfVariable__Member *) calloc(1,
 				sizeof(struct GetNamedVariableListAttributesResponse__listOfVariable__Member));
 
 		varListResponse->listOfVariable.list.array[i]->variableSpecification.present =
@@ -380,13 +382,13 @@ createGetNamedVariableListAttributesResponse(int invokeId, ByteBuffer* response,
 		char* variableDomainName = MmsDomain_getName(variableEntry->domain);
 
 		varListResponse->listOfVariable.list.array[i]->variableSpecification.choice.name.choice.
-			domainspecific.domainId.buf = copyString(variableDomainName);
+			domainspecific.domainId.buf = (uint8_t*) copyString(variableDomainName);
 
 		varListResponse->listOfVariable.list.array[i]->variableSpecification.choice.name.choice.
 			domainspecific.domainId.size = strlen(variableDomainName);
 
 		varListResponse->listOfVariable.list.array[i]->variableSpecification.choice.name.choice.
-			domainspecific.itemId.buf = copyString(variableEntry->variableName);
+			domainspecific.itemId.buf = (uint8_t*) copyString(variableEntry->variableName);
 
 		varListResponse->listOfVariable.list.array[i]->variableSpecification.choice.name.choice.
 			domainspecific.itemId.size = strlen(variableEntry->variableName);

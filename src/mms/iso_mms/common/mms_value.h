@@ -55,8 +55,11 @@ MmsValue_createArray(MmsTypeSpecification* elementType, int size);
  *
  * \return the size of the array
  */
-uint32_t
-MmsValue_getArraySize(MmsValue* self);
+uint32_t inline
+MmsValue_getArraySize(MmsValue* value)
+{
+	return value->value.structure.size;
+}
 
 /**
  * Get an element of an array or structure.

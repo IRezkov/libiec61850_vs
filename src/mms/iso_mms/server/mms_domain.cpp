@@ -23,6 +23,9 @@
 
 #include "mms_device_model.h"
 
+void
+mmsServer_deleteVariableList(LinkedList namedVariableLists, char* variableListName);
+
 static MmsTypeSpecification*
 getNamedVariableRecursive(MmsTypeSpecification* variable, char* nameId)
 {
@@ -98,7 +101,7 @@ freeNamedVariables(MmsTypeSpecification** variables, int variablesCount)
 MmsDomain*
 MmsDomain_create(char* domainName)
 {
-	MmsDomain* self = calloc(1, sizeof(MmsDomain));
+	MmsDomain* self = (MmsDomain*) calloc(1, sizeof(MmsDomain));
 
 	self->domainName = copyString(domainName);
 	self->namedVariableLists = LinkedList_create();
@@ -118,7 +121,7 @@ MmsDomain_destroy(MmsDomain* self)
 		free(self->namedVariables);
 	}
 
-	LinkedList_destroyDeep(self->namedVariableLists, MmsNamedVariableList_destroy);
+	LinkedList_destroyDeep(self->namedVariableLists, (void(__cdecl*)(void*))MmsNamedVariableList_destroy);
 
 	free(self);
 }

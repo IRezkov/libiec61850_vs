@@ -42,8 +42,8 @@ createMmsWriteResponse(MmsServerConnection* connection,
 
 	writeResponse->list.count = 1;
 	writeResponse->list.size = 1;
-	writeResponse->list.array = calloc(1, sizeof(struct WriteResponse__Member*));
-	writeResponse->list.array[0] = calloc(1, sizeof(struct WriteResponse__Member));
+	writeResponse->list.array = (WriteResponse__Member **) calloc(1, sizeof(struct WriteResponse__Member*));
+	writeResponse->list.array[0] = (WriteResponse__Member *) calloc(1, sizeof(struct WriteResponse__Member));
 
 
 	if (indication == MMS_VALUE_OK)

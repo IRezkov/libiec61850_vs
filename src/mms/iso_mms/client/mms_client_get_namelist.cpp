@@ -29,6 +29,9 @@
 #include "string_utilities.h"
 #include "mms_client_internal.h"
 
+int BerDecoder_decodeLength(uint8_t* buffer, int* length, int bufPos, int maxBufPos);
+uint32_t BerDecoder_decodeUint32(uint8_t* buffer, int intlen, int bufPos);
+
 int
 mmsClient_createMmsGetNameListRequestVMDspecific(long invokeId, ByteBuffer* writeBuffer,
 		char* continueAfter)
@@ -43,8 +46,8 @@ mmsClient_createMmsGetNameListRequestVMDspecific(long invokeId, ByteBuffer* writ
 	request = &(mmsPdu->choice.confirmedRequestPdu.confirmedServiceRequest.choice.getNameList);
 
 	if (continueAfter != NULL) {
-		request->continueAfter = calloc(1, sizeof(Identifier_t));
-		request->continueAfter->buf = copyString(continueAfter);
+		request->continueAfter = (Identifier_t *) calloc(1, sizeof(Identifier_t));
+		request->continueAfter->buf = (uint8_t*) copyString(continueAfter);
 		request->continueAfter->size = strlen(continueAfter);
 	}
 	else
@@ -59,7 +62,7 @@ mmsClient_createMmsGetNameListRequestVMDspecific(long invokeId, ByteBuffer* writ
 	asn_enc_rval_t rval;
 
 	rval = der_encode(&asn_DEF_MmsPdu, mmsPdu,
-	            mmsClient_write_out, (void*) writeBuffer);
+	           (asn_app_consume_bytes_f (__cdecl *)) mmsClient_write_out, (void*) writeBuffer);
 
 	if (DEBUG) xer_fprint(stdout, &asn_DEF_MmsPdu, mmsPdu);
 
@@ -83,8 +86,8 @@ mmsClient_createMmsGetNameListRequestAssociationSpecific(long invokeId, ByteBuff
 
 
 	if (continueAfter != NULL) {
-		request->continueAfter = calloc(1, sizeof(Identifier_t));
-		request->continueAfter->buf = copyString(continueAfter);
+		request->continueAfter = (Identifier_t *) calloc(1, sizeof(Identifier_t));
+		request->continueAfter->buf = (uint8_t*) copyString(continueAfter);
 		request->continueAfter->size = strlen(continueAfter);
 	}
 	else
@@ -100,7 +103,7 @@ mmsClient_createMmsGetNameListRequestAssociationSpecific(long invokeId, ByteBuff
 	asn_enc_rval_t rval;
 
 	rval = der_encode(&asn_DEF_MmsPdu, mmsPdu,
-				mmsClient_write_out, (void*) writeBuffer);
+				(asn_app_consume_bytes_f (__cdecl *)) mmsClient_write_out, (void*) writeBuffer);
 
 	if (DEBUG) xer_fprint(stdout, &asn_DEF_MmsPdu, mmsPdu);
 
@@ -208,8 +211,8 @@ mmsClient_createGetNameListRequestDomainSpecific(long invokeId, char* domainName
 	request = &(mmsPdu->choice.confirmedRequestPdu.confirmedServiceRequest.choice.getNameList);
 
 	if (continueAfter != NULL) {
-		request->continueAfter = calloc(1, sizeof(Identifier_t));
-		request->continueAfter->buf = copyString(continueAfter);
+		request->continueAfter = (Identifier_t *) calloc(1, sizeof(Identifier_t));
+		request->continueAfter->buf = (uint8_t*) copyString(continueAfter);
 		request->continueAfter->size = strlen(continueAfter);
 	}
 	else
@@ -218,7 +221,7 @@ mmsClient_createGetNameListRequestDomainSpecific(long invokeId, char* domainName
 
 
 	request->objectScope.present = GetNameListRequest__objectScope_PR_domainSpecific;
-	request->objectScope.choice.domainSpecific.buf = domainName;
+	request->objectScope.choice.domainSpecific.buf = (uint8_t*) domainName;
 	request->objectScope.choice.domainSpecific.size = strlen(domainName);
 	request->objectClass.present = ObjectClass_PR_basicObjectClass;
 
@@ -232,7 +235,7 @@ mmsClient_createGetNameListRequestDomainSpecific(long invokeId, char* domainName
 	asn_enc_rval_t rval;
 
 	rval = der_encode(&asn_DEF_MmsPdu, mmsPdu,
-	            mmsClient_write_out, (void*) writeBuffer);
+	        (asn_app_consume_bytes_f (__cdecl *)) mmsClient_write_out, (void*) writeBuffer);
 
 	if (DEBUG) xer_fprint(stdout, &asn_DEF_MmsPdu, mmsPdu);
 

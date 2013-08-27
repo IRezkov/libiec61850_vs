@@ -7,6 +7,8 @@
 #include <constr_SEQUENCE_OF.h>
 #include <asn_SEQUENCE_OF.h>
 
+#define APC_EXTENSIBLE 0x4
+
 /*
  * The DER encoder of the SEQUENCE OF type.
  */

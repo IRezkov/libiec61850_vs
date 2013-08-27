@@ -81,4 +81,10 @@ MmsMapping_addObservedAttribute(MmsMapping* self, DataAttribute* dataAttribute,
 char*
 MmsMapping_getNextNameElement(char* name);
 
+void /* Create PHYCOMADDR ACSI type instance */
+MmsMapping_createPhyComAddrStructure(MmsTypeSpecification* namedVariable);
+
+ControlObject*
+MmsMapping_getControlObject(MmsMapping* self, MmsDomain* domain, char* lnName, char* coName);
+
 #endif /* MMS_MAPPING_H_ */

@@ -4,7 +4,7 @@ Copyright (c) Microsoft Corporation. All rights reserved.
 
 Module Name:
 
-    myiphlpapi.h	author: I.Rezkov
+    iphlpapi.h
 
 Abstract:
     Header file for functions to interact with the IP Stack for MIB-II and
@@ -25,7 +25,7 @@ extern "C" {
 
 //////////////////////////////////////////////////////////////////////////////
 //                                                                          //
-// IPRTRMIB.H has the definitions of the structures used to set and get     //
+// IPRTRMIB.H has the definitions of the strcutures used to set and get     //
 // information                                                              //
 //                                                                          //
 //////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,6 @@ extern "C" {
 #include <iprtrmib.h>
 #include <ipexport.h>
 #include "myiptypes.h"
-#include <tcpestats.h>
 
 //////////////////////////////////////////////////////////////////////////////
 //                                                                          //
@@ -108,12 +107,12 @@ GetIpAddrTable(
 //                                                                          //
 //////////////////////////////////////////////////////////////////////////////
 
-ULONG
+DWORD
 WINAPI
 GetIpNetTable(
-    OUT PMIB_IPNETTABLE IpNetTable,
-    IN OUT PULONG SizePointer,
-    IN BOOL Order
+    OUT    PMIB_IPNETTABLE pIpNetTable,
+    IN OUT PULONG          pdwSize,
+    IN     BOOL            bOrder
     );
 
 //////////////////////////////////////////////////////////////////////////////
@@ -136,219 +135,22 @@ GetIpForwardTable(
 //                                                                          //
 //////////////////////////////////////////////////////////////////////////////
 
-ULONG
+DWORD
 WINAPI
 GetTcpTable(
-    OUT PMIB_TCPTABLE TcpTable,
-    IN OUT PULONG SizePointer,
-    IN BOOL Order
+    OUT    PMIB_TCPTABLE pTcpTable,
+    IN OUT PDWORD        pdwSize,
+    IN     BOOL          bOrder
     );
 
 DWORD
-WINAPI
-GetExtendedTcpTable(
-    OUT    PVOID           pTcpTable,
-    IN OUT PDWORD          pdwSize,
-    IN     BOOL            bOrder,
-    IN     ULONG           ulAf,
-    IN     TCP_TABLE_CLASS TableClass,
-    IN     ULONG           Reserved
-    );    
-
-DWORD
-WINAPI
-GetOwnerModuleFromTcpEntry(
-    IN     PMIB_TCPROW_OWNER_MODULE      pTcpEntry,
-    IN     TCPIP_OWNER_MODULE_INFO_CLASS Class,
-    OUT    PVOID                         pBuffer,
-    IN OUT PDWORD                        pdwSize
-    );
-
-ULONG
 WINAPI
 GetUdpTable(
-    OUT PMIB_UDPTABLE UdpTable,
-    IN OUT PULONG SizePointer,
-    IN BOOL Order
+    OUT    PMIB_UDPTABLE pUdpTable,
+    IN OUT PDWORD        pdwSize,
+    IN     BOOL          bOrder
     );
 
-DWORD
-WINAPI
-GetExtendedUdpTable(
-    OUT    PVOID           pUdpTable,
-    IN OUT PDWORD          pdwSize,
-    IN     BOOL            bOrder,
-    IN     ULONG           ulAf,
-    IN     UDP_TABLE_CLASS TableClass,
-    IN     ULONG           Reserved
-    );
-
-DWORD
-WINAPI
-GetOwnerModuleFromUdpEntry(
-    IN     PMIB_UDPROW_OWNER_MODULE      pUdpEntry,
-    IN     TCPIP_OWNER_MODULE_INFO_CLASS Class,
-    OUT    PVOID                         pBuffer,
-    IN OUT PDWORD                        pdwSize
-    );
-    
-#if (NTDDI_VERSION >= NTDDI_LONGHORN)
-ULONG
-WINAPI
-GetTcpTable2(
-    OUT PMIB_TCPTABLE2 TcpTable,
-    IN OUT PULONG SizePointer,
-    IN BOOL Order
-    );
-#endif // (NTDDI_VERSION >= NTDDI_LONGHORN)  
-
-#if (NTDDI_VERSION < NTDDI_LONGHORN)
-//
-// Deprecated APIs, Added for documentation.
-//
-
-DWORD
-AllocateAndGetTcpExTableFromStack(
-    OUT PVOID         *ppTcpTable,
-    IN  BOOL          bOrder,
-    IN  HANDLE        hHeap,
-    IN  DWORD         dwFlags,
-    IN  DWORD         dwFamily
-    );
-
-DWORD
-AllocateAndGetUdpExTableFromStack(
-    OUT PVOID         *ppUdpTable,
-    IN  BOOL          bOrder,
-    IN  HANDLE        hHeap,
-    IN  DWORD         dwFlags,
-    IN  DWORD         dwFamily
-    );
-
-#endif // (NTDDI_VERSION < NTDDI_LONGHORN) 
-
-#ifdef _WS2IPDEF_
-//
-// The following definitions require Winsock2.
-//
-
-#if (NTDDI_VERSION >= NTDDI_LONGHORN)
-ULONG
-WINAPI
-GetTcp6Table(
-    OUT PMIB_TCP6TABLE TcpTable,
-    IN OUT PULONG SizePointer,
-    IN BOOL Order
-    );
-
-ULONG
-WINAPI
-GetTcp6Table2(
-    OUT PMIB_TCP6TABLE2 TcpTable,
-    IN OUT PULONG SizePointer,
-    IN BOOL Order
-    );
-
-#endif // (NTDDI_VERSION >= NTDDI_LONGHORN)  
-
-#ifdef WINAPI
-
-ULONG
-WINAPI
-GetPerTcpConnectionEStats(
-    PMIB_TCPROW Row,
-    TCP_ESTATS_TYPE EstatsType,
-    __out_bcount_opt(RwSize) PUCHAR Rw,
-    ULONG RwVersion,
-    ULONG RwSize,
-    __out_bcount_opt(RosSize) PUCHAR Ros,
-    ULONG RosVersion,
-    ULONG RosSize,
-    __out_bcount_opt(RodSize) PUCHAR Rod,
-    ULONG RodVersion,
-    ULONG RodSize
-    );
-
-ULONG
-WINAPI
-SetPerTcpConnectionEStats(
-    PMIB_TCPROW Row,
-    TCP_ESTATS_TYPE EstatsType,
-    __in_bcount(RwSize) PUCHAR Rw,
-    ULONG RwVersion,
-    ULONG RwSize,
-    ULONG Offset
-    );
-
-#ifdef _WS2IPDEF_
-
-ULONG
-WINAPI
-GetPerTcp6ConnectionEStats(
-    PMIB_TCP6ROW Row,
-    TCP_ESTATS_TYPE EstatsType,
-    __out_bcount_opt(RwSize) PUCHAR Rw,
-    ULONG RwVersion,
-    ULONG RwSize,
-    __out_bcount_opt(RosSize) PUCHAR Ros,
-    ULONG RosVersion,
-    ULONG RosSize,
-    __out_bcount_opt(RodSize) PUCHAR Rod,
-    ULONG RodVersion,
-    ULONG RodSize
-    );
-
-ULONG
-WINAPI
-SetPerTcp6ConnectionEStats(
-    PMIB_TCP6ROW Row,
-    TCP_ESTATS_TYPE EstatsType,
-    __in_bcount(RwSize) PUCHAR Rw,
-    ULONG RwVersion,
-    ULONG RwSize,
-    ULONG Offset
-    );	
-
-#endif // _WS2IPDEF_
-
-#endif // WINAPI    
-
-DWORD
-WINAPI
-GetOwnerModuleFromTcp6Entry(
-    IN     PMIB_TCP6ROW_OWNER_MODULE     pTcpEntry,
-    IN     TCPIP_OWNER_MODULE_INFO_CLASS Class,
-    OUT    PVOID                         pBuffer,
-    IN OUT PDWORD                        pdwSize
-    );    
-
-ULONG
-WINAPI
-GetUdp6Table(
-    OUT PMIB_UDP6TABLE Udp6Table,
-    IN OUT PULONG SizePointer,
-    IN BOOL Order
-    );
-
-DWORD
-WINAPI
-GetOwnerModuleFromUdp6Entry(
-    IN     PMIB_UDP6ROW_OWNER_MODULE     pUdpEntry,
-    IN     TCPIP_OWNER_MODULE_INFO_CLASS Class,
-    OUT    PVOID                         pBuffer,
-    IN OUT PDWORD                        pdwSize
-    );    
-
-#endif // _WS2IPDEF_
-
-DWORD
-GetOwnerModuleFromPidAndInfo(
-    IN ULONG                         ulPid,
-    IN ULONGLONG                     *pInfo,
-    IN TCPIP_OWNER_MODULE_INFO_CLASS Class,
-    OUT PVOID                        pBuffer,
-    IN OUT PDWORD                    pdwSize
-    );
 
 //////////////////////////////////////////////////////////////////////////////
 //                                                                          //
@@ -356,70 +158,56 @@ GetOwnerModuleFromPidAndInfo(
 //                                                                          //
 //////////////////////////////////////////////////////////////////////////////
 
-#if (NTDDI_VERSION >= NTDDI_WIN2K)
-ULONG
+DWORD
 WINAPI
 GetIpStatistics(
-    OUT PMIB_IPSTATS Statistics
+    OUT  PMIB_IPSTATS   pStats
     );
 
-
-ULONG
+DWORD
 WINAPI
 GetIpStatisticsEx(
-    OUT PMIB_IPSTATS Statistics,
-    IN ULONG Family
+    OUT  PMIB_IPSTATS   pStats,
+    IN   DWORD          dwFamily
     );
 
-ULONG
-WINAPI
-SetIpStatisticsEx(
-    IN PMIB_IPSTATS Statistics,
-    IN ULONG Family
-    );
-
-#endif
-ULONG
+DWORD
 WINAPI
 GetIcmpStatistics(
-    OUT PMIB_ICMP Statistics
+    OUT PMIB_ICMP   pStats
     );
 
-#if (NTDDI_VERSION >= NTDDI_XPSP1)
-ULONG
+DWORD
 WINAPI
 GetIcmpStatisticsEx(
-    OUT PMIB_ICMP_EX Statistics,
-    IN ULONG Family
+    OUT PMIB_ICMP_EX    pStats,
+    IN  DWORD           dwFamily
     );
-#endif
 
-#if (NTDDI_VERSION >= NTDDI_WIN2K)
-ULONG
+DWORD
 WINAPI
 GetTcpStatistics(
-    OUT PMIB_TCPSTATS Statistics
+    OUT PMIB_TCPSTATS   pStats
     );
 
-ULONG
+DWORD
 WINAPI
 GetTcpStatisticsEx(
-    OUT PMIB_TCPSTATS Statistics,
-    IN ULONG Family
+    OUT PMIB_TCPSTATS   pStats,
+    IN  DWORD           dwFamily
     );
-#endif
 
-ULONG
+DWORD
 WINAPI
 GetUdpStatistics(
-    OUT PMIB_UDPSTATS Stats
+    OUT PMIB_UDPSTATS   pStats
     );
 
-ULONG
+DWORD
 WINAPI
 GetUdpStatisticsEx(
-    OUT PMIB_UDPSTATS Statistics,
-    IN ULONG Family
+    OUT PMIB_UDPSTATS   pStats,
+    IN  DWORD           dwFamily
     );
 
 //////////////////////////////////////////////////////////////////////////////
@@ -475,13 +263,12 @@ DeleteIpForwardEntry(
 //                                                                          //
 //////////////////////////////////////////////////////////////////////////////
 
-#if (NTDDI_VERSION >= NTDDI_WIN2K)
+
 DWORD
 WINAPI
 SetIpStatistics(
     IN PMIB_IPSTATS pIpStats
     );
-#endif
 
 //////////////////////////////////////////////////////////////////////////////
 //                                                                          //
@@ -580,9 +367,8 @@ GetUniDirectionalAdapterInfo(OUT PIP_UNIDIRECTIONAL_ADAPTER_ADDRESS pIPIfInfo,
                  OUT PULONG dwOutBufLen
                  );
 
-#if (NTDDI_VERSION >= NTDDI_WIN2KSP1)
-#ifndef NHPALLOCATEANDGETINTERFACEINFOFROMSTACK_DEFINED
-#define NHPALLOCATEANDGETINTERFACEINFOFROMSTACK_DEFINED
+#ifndef NhpAllocateAndGetInterfaceInfoFromStack_DEFINED
+#define NhpAllocateAndGetInterfaceInfoFromStack_DEFINED
 
 DWORD
 WINAPI
@@ -595,7 +381,6 @@ NhpAllocateAndGetInterfaceInfoFromStack(
     );
 
 #endif
-#endif // (NTDDI_VERSION >= NTDDI_WIN2KSP1)
 
 //////////////////////////////////////////////////////////////////////////////
 //                                                                          //
@@ -662,8 +447,8 @@ CancelIPChangeNotify(
 DWORD
 WINAPI
 GetAdapterIndex(
-    __in IN LPWSTR  AdapterName,
-    __inout OUT PULONG IfIndex
+    IN LPWSTR  AdapterName,
+    OUT PULONG IfIndex
     );
 
 DWORD
@@ -682,19 +467,16 @@ DeleteIPAddress(
     ULONG NTEContext
     );
 
-#if (NTDDI_VERSION >= NTDDI_WIN2KSP1)
 DWORD
 WINAPI
 GetNetworkParams(
     PFIXED_INFO pFixedInfo, PULONG pOutBufLen
     );
-#endif
 
-ULONG
+DWORD
 WINAPI
 GetAdaptersInfo(
-    IN PIP_ADAPTER_INFO AdapterInfo, 
-    IN OUT PULONG SizePointer
+    PIP_ADAPTER_INFO pAdapterInfo, PULONG pOutBufLen
     );
 
 PIP_ADAPTER_ORDER_MAP 
@@ -709,25 +491,23 @@ GetAdapterOrderMap(
 // The following functions require Winsock2.
 //
 
-//ULONG
+//DWORD
 //WINAPI
 //GetAdaptersAddresses(
-//    IN ULONG Family,
-//    IN ULONG Flags,
-//    IN PVOID Reserved,
-//    __out_bcount_opt(*SizePointer) PIP_ADAPTER_ADDRESSES AdapterAddresses, 
-//    IN OUT PULONG SizePointer
+//    IN     ULONG                 Family,
+//    IN     DWORD                 Flags,
+//    IN     PVOID                 Reserved,
+//    OUT    PIP_ADAPTER_ADDRESSES pAdapterAddresses, 
+//    IN OUT PULONG                pOutBufLen
 //    );
 
 #endif
 
-#if (NTDDI_VERSION >= NTDDI_WIN2KSP1)
 DWORD
 WINAPI
 GetPerAdapterInfo(
     ULONG IfIndex, PIP_PER_ADAPTER_INFO pPerAdapterInfo, PULONG pOutBufLen
     );
-#endif
 
 DWORD
 WINAPI
@@ -747,7 +527,7 @@ WINAPI
 SendARP(
     IPAddr DestIP,
     IPAddr SrcIP,
-    PVOID pMacAddr,
+    PULONG pMacAddr,
     PULONG  PhyAddrLen
     );
 
@@ -793,192 +573,16 @@ RestoreMediaSense(
     LPDWORD lpdwEnableCount OPTIONAL
     );
 
-#if (NTDDI_VERSION >= NTDDI_LONGHORN)
-
 DWORD
 WINAPI
 GetIpErrorString(
     IN IP_STATUS ErrorCode,
-    __out_ecount_opt(*Size + 1) PWSTR Buffer,
-    __inout PDWORD Size
+    OUT PWCHAR Buffer,
+    IN OUT PDWORD Size
     );
-
-#if (NTDDI_VERSION >= NTDDI_LONGHORN)
-#ifdef _WS2DEF_
-ULONG
-WINAPI
-ResolveNeighbor(
-    IN SOCKADDR *NetworkAddress,
-    OUT PVOID PhysicalAddress,
-    IN OUT PULONG PhysicalAddressLength
-    );
-#endif
-#endif  
-//
-// Port reservation API routines.
-//
-
-ULONG
-WINAPI
-CreatePersistentTcpPortReservation(
-    IN USHORT StartPort,
-    IN USHORT NumberOfPorts,
-    OUT PULONG64 Token
-    );
-
-ULONG
-WINAPI
-CreatePersistentUdpPortReservation(
-    IN USHORT StartPort,
-    IN USHORT NumberOfPorts,
-    OUT PULONG64 Token
-    );
-
-ULONG
-WINAPI
-DeletePersistentTcpPortReservation(
-    IN USHORT StartPort,
-    IN USHORT NumberOfPorts
-    );
-
-ULONG
-WINAPI
-DeletePersistentUdpPortReservation(
-    IN USHORT StartPort,
-    IN USHORT NumberOfPorts
-    );
-
-ULONG
-WINAPI
-LookupPersistentTcpPortReservation(
-    IN USHORT StartPort,
-    IN USHORT NumberOfPorts,
-    OUT PULONG64 Token
-    );
-
-ULONG
-WINAPI
-LookupPersistentUdpPortReservation(
-    IN USHORT StartPort,
-    IN USHORT NumberOfPorts,
-    OUT PULONG64 Token
-    );
-
-
-//
-// Network String parsing API
-//
-
-#define NET_STRING_IPV4_ADDRESS           0x00000001
-   // The string identifies an IPv4 Host/router using literal address.
-   // (port or prefix not allowed) 
-#define NET_STRING_IPV4_SERVICE           0x00000002
-   // The string identifies an IPv4 service using literal address.
-   // (port required; prefix not allowed) 
-#define NET_STRING_IPV4_NETWORK           0x00000004
-   // The string identifies an IPv4 network.
-   // (prefix required; port not allowed) 
-#define NET_STRING_IPV6_ADDRESS           0x00000008
-   // The string identifies an IPv6 Host/router using literal address.
-   // (port or prefix not allowed; scope-id allowed) 
-#define NET_STRING_IPV6_ADDRESS_NO_SCOPE  0x00000010
-   // The string identifies an IPv6 Host/router using literal address
-   // where the interface context is already known.
-   // (port or prefix not allowed; scope-id not allowed) 
-#define NET_STRING_IPV6_SERVICE           0x00000020
-   // The string identifies an IPv6 service using literal address.
-   // (port required; prefix not allowed; scope-id allowed) 
-#define NET_STRING_IPV6_SERVICE_NO_SCOPE  0x00000040
-   // The string identifies an IPv6 service using literal address
-   // where the interface context is already known.
-   // (port required; prefix not allowed; scope-id not allowed) 
-#define NET_STRING_IPV6_NETWORK           0x00000080
-   // The string identifies an IPv6 network.
-   // (prefix required; port or scope-id not allowed) 
-#define NET_STRING_NAMED_ADDRESS          0x00000100
-   // The string identifies an Internet Host using DNS.
-   // (port or prefix or scope-id not allowed) 
-#define NET_STRING_NAMED_SERVICE          0x00000200
-   // The string identifies an Internet service using DNS.
-   // (port required; prefix or scope-id not allowed)
-
-#define NET_STRING_IP_ADDRESS             (NET_STRING_IPV4_ADDRESS   | \
-                                           NET_STRING_IPV6_ADDRESS)
-
-#define NET_STRING_IP_ADDRESS_NO_SCOPE    (NET_STRING_IPV4_ADDRESS   | \
-                                           NET_STRING_IPV6_ADDRESS_NO_SCOPE)
-
-#define NET_STRING_IP_SERVICE             (NET_STRING_IPV4_SERVICE   | \
-                                           NET_STRING_IPV6_SERVICE)
-
-#define NET_STRING_IP_SERVICE_NO_SCOPE    (NET_STRING_IPV4_SERVICE   | \
-                                           NET_STRING_IPV6_SERVICE_NO_SCOPE)
-
-#define NET_STRING_IP_NETWORK             (NET_STRING_IPV4_NETWORK   | \
-                                           NET_STRING_IPV6_NETWORK)
-
-#define NET_STRING_ANY_ADDRESS            (NET_STRING_NAMED_ADDRESS  | \
-                                           NET_STRING_IP_ADDRESS)
-
-#define NET_STRING_ANY_ADDRESS_NO_SCOPE   (NET_STRING_NAMED_ADDRESS  | \
-                                           NET_STRING_IP_ADDRESS_NO_SCOPE)
-
-#define NET_STRING_ANY_SERVICE            (NET_STRING_NAMED_SERVICE  | \
-                                           NET_STRING_IP_SERVICE)
-
-#define NET_STRING_ANY_SERVICE_NO_SCOPE   (NET_STRING_NAMED_SERVICE  | \
-                                           NET_STRING_IP_SERVICE_NO_SCOPE)
-
-typedef enum NET_ADDRESS_FORMAT_
-{
-   NET_ADDRESS_FORMAT_UNSPECIFIED = 0,
-
-   NET_ADDRESS_DNS_NAME,
-   NET_ADDRESS_IPV4,
-   NET_ADDRESS_IPV6
-
-} NET_ADDRESS_FORMAT;
-
-#if defined (_WS2DEF_) && defined (_WS2IPDEF_) && defined(_WINDNS_INCLUDED_)
-	// app must include winsock2.h, ws2ipdef.h, and windns.h to use this API
-
-typedef struct NET_ADDRESS_INFO_
-{
-   NET_ADDRESS_FORMAT Format;
-
-   union
-   {
-      struct {
-         WCHAR Address[DNS_MAX_NAME_BUFFER_LENGTH];   
-         WCHAR Port[6];
-      } NamedAddress;
-
-      SOCKADDR_IN Ipv4Address;
-      SOCKADDR_IN6 Ipv6Address;
-      SOCKADDR IpAddress;
-   };
-
-} NET_ADDRESS_INFO, *PNET_ADDRESS_INFO;
-
-DWORD
-WINAPI
-ParseNetworkString(
-   IN CONST WCHAR* NetworkString,
-   IN DWORD Types,
-   OUT PNET_ADDRESS_INFO AddressInfo OPTIONAL,
-   OUT USHORT* PortNumber OPTIONAL,
-   OUT BYTE* PrefixLength OPTIONAL
-   );
-
-#endif
-
-#include <netioapi.h>
-
-#endif // (NTDDI_VERSION >= NTDDI_LONGHORN)
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif //__IPHLPAPI_H__
-

@@ -31,6 +31,10 @@
 #include <MmsPdu.h>
 
 #include "byte_buffer.h"
+#include "thread.h"
+
+bool mmsClient_parseInitiateResponse(MmsConnection self);
+int mmsClient_createMmsGetNameListRequestAssociationSpecific(long invokeId, ByteBuffer* writeBuffer, char* continueAfter);
 
 static void
 handleUnconfirmedMmsPdu(MmsConnection self, ByteBuffer* message)
@@ -184,7 +188,7 @@ mmsIsoCallback(IsoIndication indication, void* parameter, ByteBuffer* payload)
 MmsConnection
 MmsConnection_create()
 {
-	MmsConnection self = calloc(1, sizeof(struct sMmsConnection));
+	MmsConnection self = (MmsConnection) calloc(1, sizeof(struct sMmsConnection));
 
 	self->parameters.dataStructureNestingLevel = -1;
 	self->parameters.maxServOutstandingCalled = -1;
@@ -237,11 +241,11 @@ MmsConnection_getError(MmsConnection self) {
 MmsIndication
 MmsConnection_connect(MmsConnection self, MmsClientError* mmsError, char* serverName, int serverPort)
 {
-	self->isoClient = IsoClientConnection_create(mmsIsoCallback, (void*) self);
+	self->isoClient = IsoClientConnection_create((IsoIndicationCallback) mmsIsoCallback, (void*) self);
 
 	if (self->isoParameters == NULL) {
 		self->isoConnectionParametersSelfAllocated = 1;
-		self->isoParameters = calloc(1, sizeof(IsoConnectionParameters));
+		self->isoParameters = (IsoConnectionParameters *) calloc(1, sizeof(IsoConnectionParameters));
 	}
 
 	self->isoParameters->hostname = serverName;
@@ -250,7 +254,7 @@ MmsConnection_connect(MmsConnection self, MmsClientError* mmsError, char* server
 	if (self->parameters.maxPduSize == -1)
 		self->parameters.maxPduSize = MMS_MAXIMUM_PDU_SIZE;
 
-	self->buffer = malloc(self->parameters.maxPduSize);
+	self->buffer = (uint8_t*) malloc(self->parameters.maxPduSize);
 
 	ByteBuffer payload;
 
@@ -264,7 +268,8 @@ MmsConnection_connect(MmsConnection self, MmsClientError* mmsError, char* server
 	IsoClientConnection_associate(self->isoClient, self->isoParameters, &payload);
 
 	/* poll callback handler TODO poll with timeout */
-	while (self->connectionState == MMS_CON_WAITING) {
+	while (self->connectionState == MMS_CON_WAITING) 
+	{
 		Thread_sleep(1);
 	}
 
@@ -345,7 +350,7 @@ mmsClient_getNameListSingleRequest(
 			*mmsError = MMS_ERROR_SERVICE_ERROR;
 
 			if (*nameList != NULL) {
-				LinkedList_destroy(&nameList);
+				LinkedList_destroy((LinkedList) &nameList);
 			}
 
 			*nameList = NULL;
@@ -383,7 +388,7 @@ mmsClient_getNameList(MmsConnection self, MmsClientError *mmsError,
 	while ((moreFollows == true) && (list != NULL)) {
 		LinkedList lastElement = LinkedList_getLastElement(list);
 
-		char* lastIdentifier = lastElement->data;
+		char* lastIdentifier = (char*) lastElement->data;
 
 		if (DEBUG) printf("getNameList: identifier: %s\n", lastIdentifier);
 
@@ -913,7 +918,7 @@ MmsConnection_writeVariable(MmsConnection self, MmsClientError* clientError,
 MmsVariableSpecification*
 MmsVariableSpecification_create(char* domainId, char* itemId)
 {
-	MmsVariableSpecification* varSpec = malloc(sizeof(MmsVariableSpecification));
+	MmsVariableSpecification* varSpec = (MmsVariableSpecification*) malloc(sizeof(MmsVariableSpecification));
 
 	varSpec->domainId = domainId;
 	varSpec->itemId = itemId;
@@ -927,7 +932,7 @@ MmsVariableSpecification*
 MmsVariableSpecification_createAlternateAccess(char* domainId, char* itemId, int32_t index,
 		char* componentName)
 {
-	MmsVariableSpecification* varSpec = malloc(sizeof(MmsVariableSpecification));
+	MmsVariableSpecification* varSpec = (MmsVariableSpecification*) malloc(sizeof(MmsVariableSpecification));
 
 	varSpec->domainId = domainId;
 	varSpec->itemId = itemId;

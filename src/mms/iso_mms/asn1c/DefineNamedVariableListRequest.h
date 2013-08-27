@@ -25,21 +25,27 @@ extern "C" {
 /* Forward declarations */
 struct AlternateAccess;
 
+struct DefineNamedVariableListRequest__listOfVariable__Member 
+{
+	VariableSpecification_t	 variableSpecification;
+	struct AlternateAccess	*alternateAccess	/* OPTIONAL */;
+
+	/* Context for parsing across buffer boundaries */
+	asn_struct_ctx_t _asn_ctx;
+};
+
+struct DefineNamedVariableListRequest__listOfVariable 
+{
+	A_SEQUENCE_OF(DefineNamedVariableListRequest__listOfVariable__Member) list;
+
+	/* Context for parsing across buffer boundaries */
+	asn_struct_ctx_t _asn_ctx;
+};
+
 /* DefineNamedVariableListRequest */
 typedef struct DefineNamedVariableListRequest {
 	ObjectName_t	 variableListName;
-	struct DefineNamedVariableListRequest__listOfVariable {
-		A_SEQUENCE_OF(struct DefineNamedVariableListRequest__listOfVariable__Member {
-			VariableSpecification_t	 variableSpecification;
-			struct AlternateAccess	*alternateAccess	/* OPTIONAL */;
-			
-			/* Context for parsing across buffer boundaries */
-			asn_struct_ctx_t _asn_ctx;
-		} ) list;
-		
-		/* Context for parsing across buffer boundaries */
-		asn_struct_ctx_t _asn_ctx;
-	} listOfVariable;
+	struct DefineNamedVariableListRequest__listOfVariable listOfVariable;
 	
 	/* Context for parsing across buffer boundaries */
 	asn_struct_ctx_t _asn_ctx;

@@ -6,6 +6,9 @@
 #include <asn_internal.h>
 #include <constr_CHOICE.h>
 
+/* May have extension */
+#define APC_EXTENSIBLE	0x4	
+
 /*
  * Number of bytes left for this structure.
  * (ctx->left) indicates the number of bytes _transferred_ for the structure.

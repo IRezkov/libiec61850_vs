@@ -22,14 +22,18 @@
 extern "C" {
 #endif
 
+struct GetNameListResponse__listOfIdentifier 
+{
+	A_SEQUENCE_OF(Identifier_t) list;
+
+	/* Context for parsing across buffer boundaries */
+	asn_struct_ctx_t _asn_ctx;
+};
+
 /* GetNameListResponse */
-typedef struct GetNameListResponse {
-	struct GetNameListResponse__listOfIdentifier {
-		A_SEQUENCE_OF(Identifier_t) list;
-		
-		/* Context for parsing across buffer boundaries */
-		asn_struct_ctx_t _asn_ctx;
-	} listOfIdentifier;
+typedef struct GetNameListResponse 
+{
+	struct GetNameListResponse__listOfIdentifier listOfIdentifier;
 	BOOLEAN_t	*moreFollows	/* DEFAULT TRUE */;
 	
 	/* Context for parsing across buffer boundaries */

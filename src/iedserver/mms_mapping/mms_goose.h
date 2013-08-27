@@ -59,4 +59,14 @@ MmsGooseControlBlock_enable(MmsGooseControlBlock self);
 void
 MmsGooseControlBlock_disable(MmsGooseControlBlock self);
 
+MmsTypeSpecification*
+GOOSE_createGOOSEControlBlocks(MmsMapping* self, MmsDomain* domain,
+        LogicalNode* logicalNode, int gseCount);
+
+MmsValue*
+MmsGooseControlBlock_getMmsValues(MmsGooseControlBlock self);
+
+DataSet*
+MmsGooseControlBlock_getDataSet(MmsGooseControlBlock self);
+
 #endif /* MMS_GOOSE_H_ */

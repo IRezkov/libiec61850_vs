@@ -126,32 +126,37 @@ typedef enum ServiceError__errorClass__file {
 	ServiceError__errorClass__file_insufficientspaceinfilestore	= 9
 } e_ServiceError__errorClass__file;
 
+struct ServiceError__errorClass 
+{
+	ServiceError__errorClass_PR present;
+	union ServiceError__errorClass_u 
+	{
+		INTEGER_t	 vmdstate;
+		INTEGER_t	 applicationreference;
+		INTEGER_t	 definition;
+		INTEGER_t	 resource;
+		INTEGER_t	 service;
+		INTEGER_t	 servicepreempt;
+		INTEGER_t	 timeresolution;
+		INTEGER_t	 access;
+		INTEGER_t	 initiate;
+		INTEGER_t	 conclude;
+		INTEGER_t	 cancel;
+		INTEGER_t	 file;
+		INTEGER_t	 others;
+	} choice;
+
+	/* Context for parsing across buffer boundaries */
+	asn_struct_ctx_t _asn_ctx;
+};
+
 /* ServiceError */
-typedef struct ServiceError {
-	struct ServiceError__errorClass {
-		ServiceError__errorClass_PR present;
-		union ServiceError__errorClass_u {
-			INTEGER_t	 vmdstate;
-			INTEGER_t	 applicationreference;
-			INTEGER_t	 definition;
-			INTEGER_t	 resource;
-			INTEGER_t	 service;
-			INTEGER_t	 servicepreempt;
-			INTEGER_t	 timeresolution;
-			INTEGER_t	 access;
-			INTEGER_t	 initiate;
-			INTEGER_t	 conclude;
-			INTEGER_t	 cancel;
-			INTEGER_t	 file;
-			INTEGER_t	 others;
-		} choice;
-		
-		/* Context for parsing across buffer boundaries */
-		asn_struct_ctx_t _asn_ctx;
-	} errorClass;
+typedef struct ServiceError 
+{
+	struct ServiceError__errorClass errorClass;
 	INTEGER_t	*additionalCode	/* OPTIONAL */;
 	VisibleString_t	*additionalDescription	/* OPTIONAL */;
-	
+
 	/* Context for parsing across buffer boundaries */
 	asn_struct_ctx_t _asn_ctx;
 } ServiceError_t;

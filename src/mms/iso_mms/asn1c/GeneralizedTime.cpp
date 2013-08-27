@@ -23,17 +23,20 @@
 #pragma message( "  if you want to use asn_GT2time() or asn_UT2time().")
 #pragma message( "PLEASE STOP AND READ!")
 
-static struct tm *localtime_r(const time_t *tloc, struct tm *result) {
-	struct tm *tm;
-	if((tm = localtime(tloc)))
-		return memcpy(result, tm, sizeof(struct tm));
+static struct tm *localtime_r(const time_t *tloc, struct tm *result) 
+{
+	struct tm *ptm;
+	if (ptm = localtime(tloc))
+		return (tm*) memcpy((void*)result, (void*)ptm, sizeof(tm));
+
 	return 0;
 }
 
-static struct tm *gmtime_r(const time_t *tloc, struct tm *result) {
-	struct tm *tm;
-	if((tm = gmtime(tloc)))
-		return memcpy(result, tm, sizeof(struct tm));
+static struct tm *gmtime_r(const time_t *tloc, struct tm *result) 
+{
+	struct tm *ptm;
+	if (ptm = gmtime(tloc))
+		return (tm*) memcpy(result, ptm, sizeof(tm));
 	return 0;
 }
 
@@ -68,12 +71,12 @@ static struct tm *gmtime_r(const time_t *tloc, struct tm *result) {
 #endif	/* HAVE_TM_GMTOFF */
 
 #if	(defined(_EMULATE_TIMEGM) || !defined(HAVE_TM_GMTOFF))
-#warning "PLEASE STOP AND READ!"
-#warning "  timegm() is implemented via getenv(\"TZ\")/setenv(\"TZ\"), which may be not thread-safe."
-#warning "  "
-#warning "  You must fix the code by inserting appropriate locking"
-#warning "  if you want to use asn_GT2time() or asn_UT2time()."
-#warning "PLEASE STOP AND READ!"
+#pragma warning "PLEASE STOP AND READ!"
+#pragma warning "  timegm() is implemented via getenv(\"TZ\")/setenv(\"TZ\"), which may be not thread-safe."
+#pragma warning "  "
+#pragma warning "  You must fix the code by inserting appropriate locking"
+#pragma warning "  if you want to use asn_GT2time() or asn_UT2time()."
+#pragma warning "PLEASE STOP AND READ!"
 #endif	/* _EMULATE_TIMEGM */
 
 /*

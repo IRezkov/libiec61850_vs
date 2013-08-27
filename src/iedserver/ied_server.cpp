@@ -21,10 +21,14 @@
  *  See COPYING file for the complete license text.
  */
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "iec61850_server.h"
 #include "mms_mapping.h"
 #include "control.h"
 #include "stack_config.h"
+
+
 
 struct sIedServer {
 	IedModel* model;
@@ -52,7 +56,7 @@ createControlObjects(IedServer self, MmsDomain* domain, char* lnName, MmsTypeSpe
             MmsValue* sbowVal = NULL;
             MmsValue* cancelVal = NULL;
 
-            ControlObject* controlObject = ControlObject_create(self->mmsServer, domain, lnName, coSpec->name);
+            ControlObject* controlObject = ControlObject_create(&self->mmsServer, domain, lnName, coSpec->name);
 
             MmsValue* structure = MmsValue_newDefaultValue(coSpec);
 
@@ -144,13 +148,13 @@ installDefaultValuesForDataAttribute(IedServer self, DataAttribute* dataAttribut
 {
 	sprintf(objectReference + position, ".%s", dataAttribute->name);
 
-	char* mmsVariableName[255]; //TODO check for optimal size
+	char mmsVariableName[255]; //TODO check for optimal size
 
 	MmsValue* value = dataAttribute->mmsValue;
 
 	MmsMapping_createMmsVariableNameFromObjectReference(objectReference, dataAttribute->fc, mmsVariableName);
 
-	char* domainName[100]; //TODO check for optimal size
+	char domainName[100]; //TODO check for optimal size
 
 	MmsMapping_getMmsDomainFromObjectReference(objectReference, domainName);
 
@@ -171,12 +175,12 @@ installDefaultValuesForDataAttribute(IedServer self, DataAttribute* dataAttribut
 	}
 
 	int childPosition = strlen(objectReference);
-	DataAttribute* subDataAttribute = dataAttribute->firstChild;
+	DataAttribute* subDataAttribute = (DataAttribute*) dataAttribute->firstChild;
 
 	while (subDataAttribute != NULL) {
 		installDefaultValuesForDataAttribute(self, subDataAttribute, objectReference, childPosition);
 
-		subDataAttribute = subDataAttribute->sibling;
+		subDataAttribute = (DataAttribute*) subDataAttribute->sibling;
 	}
 }
 
@@ -192,10 +196,10 @@ installDefaultValuesForDataObject(IedServer self, DataObject* dataObject,
 
 	while (childNode != NULL) {
 		if (childNode->modelType == DataObjectModelType) {
-			installDefaultValuesForDataObject(self, childNode, objectReference, childPosition);
+			installDefaultValuesForDataObject(self, (DataObject*) childNode, objectReference, childPosition);
 		}
 		else if (childNode->modelType == DataAttributeModelType) {
-			installDefaultValuesForDataAttribute(self, childNode, objectReference, childPosition);
+			installDefaultValuesForDataAttribute(self, (DataAttribute*) childNode, objectReference, childPosition);
 		}
 
 		childNode = childNode->sibling;
@@ -221,17 +225,17 @@ installDefaultValuesInCache(IedServer self)
 		while (logicalNode != NULL) {
 			sprintf(nodeReference, "/%s", logicalNode->name);
 
-			DataObject* dataObject = logicalNode->firstChild;
+			DataObject* dataObject = (DataObject*) logicalNode->firstChild;
 
 			int refPosition = strlen(objectReference);
 
 			while (dataObject != NULL) {
 				installDefaultValuesForDataObject(self, dataObject, objectReference, refPosition);
 
-				dataObject = dataObject->sibling;
+				dataObject = (DataObject*) dataObject->sibling;
 			}
 
-			logicalNode = logicalNode->sibling;
+			logicalNode = (LogicalNode*) logicalNode->sibling;
 		}
 
 		logicalDevice = logicalDevice->sibling;
@@ -270,7 +274,7 @@ updateDataSetsWithCachedValues(IedServer self)
 IedServer
 IedServer_create(IedModel* iedModel)
 {
-	IedServer self = calloc(1, sizeof(struct sIedServer));
+	IedServer self = (IedServer) calloc(1, sizeof(struct sIedServer));
 
 	self->model = iedModel;
 
@@ -371,9 +375,9 @@ IedServer_setControlHandler(
         ControlHandler listener,
         void* parameter)
 {
-    char* objectReference[129];
+    char objectReference[129];
 
-    ModelNode_getObjectReference(node, objectReference);
+    ModelNode_getObjectReference((ModelNode*) node, objectReference);
 
     char* separator = strchr(objectReference, '/');
 

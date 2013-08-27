@@ -8,6 +8,9 @@
 #include <BIT_STRING.h>	/* for .bits_unused member */
 #include <errno.h>
 
+//#define APC_SEMI_CONSTRAINED	0x1
+#include "per_support.h"
+
 /*
  * OCTET STRING basic type description.
  */

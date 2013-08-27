@@ -8,6 +8,11 @@
 #include <asn_codecs_prim.h>	/* Encoder and decoder of a primitive type */
 #include <errno.h>
 
+#define		APC_UNCONSTRAINED	0x0	/* No PER visible constraints */
+#define		APC_SEMI_CONSTRAINED	 0x1	/* Constrained at "lb" */
+#define		APC_CONSTRAINED		 0x2	/* Fully constrained */
+#define		APC_EXTENSIBLE		 0x4	/* May have extension */
+
 /*
  * INTEGER basic type description.
  */
@@ -303,7 +308,7 @@ INTEGER_st_prealloc(INTEGER_t *st, int min_size) {
 	if(p) {
 		void *b = st->buf;
 		st->size = 0;
-		st->buf = p;
+		st->buf = (uint8_t*) p;
 		FREEMEM(b);
 		return 0;
 	} else {
@@ -553,7 +558,8 @@ INTEGER_encode_xer(asn_TYPE_descriptor_t *td, void *sptr,
 
 asn_dec_rval_t
 INTEGER_decode_uper(asn_codec_ctx_t *opt_codec_ctx, asn_TYPE_descriptor_t *td,
-	asn_per_constraints_t *constraints, void **sptr, asn_per_data_t *pd) {
+	asn_per_constraints_t *constraints, void **sptr, asn_per_data_t *pd) 
+{
 	asn_dec_rval_t rval = { RC_OK, 0 };
 	INTEGER_t *st = (INTEGER_t *)*sptr;
 	asn_per_constraint_t *ct;
@@ -561,18 +567,26 @@ INTEGER_decode_uper(asn_codec_ctx_t *opt_codec_ctx, asn_TYPE_descriptor_t *td,
 
 	(void)opt_codec_ctx;
 
-	if(!st) {
+	if(!st) 
+	{
 		st = (INTEGER_t *)(*sptr = CALLOC(1, sizeof(*st)));
 		if(!st) _ASN_DECODE_FAILED;
 	}
 
-	if(!constraints) constraints = td->per_constraints;
-	ct = constraints ? &constraints->value : 0;
+	if(!constraints) 
+		constraints = td->per_constraints;
 
-	if(ct && ct->flags & APC_EXTENSIBLE) {
+	ct = constraints ? (&constraints->value) : 0;
+
+	if (ct && ct->flags & APC_EXTENSIBLE) 
+	{
 		int inext = per_get_few_bits(pd, 1);
-		if(inext < 0) _ASN_DECODE_STARVED;
-		if(inext) ct = 0;
+
+		if(inext < 0) 
+			_ASN_DECODE_STARVED;
+
+		if(inext) 
+			ct = 0;
 	}
 
 	FREEMEM(st->buf);

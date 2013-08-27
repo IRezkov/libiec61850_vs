@@ -491,6 +491,7 @@ parseConnectPdu
 
 		switch (tag) {
 		case 0xa0: /* mode-selection */
+			{
 			if (buffer[bufPos++] != 0x80) {
 				if (DEBUG) printf("PRES: mode-value of wrong type!\n");
 				return PRESENTATION_ERROR;
@@ -500,6 +501,7 @@ parseConnectPdu
 			if (DEBUG) printf("PRES: modesel %ui\n", modeSelector);
 			bufPos += len;
 			break;
+			}
 		case 0xa2: /* normal-mode-parameters */
 			bufPos = parseNormalModeParameters(self, buffer, len, bufPos);
 

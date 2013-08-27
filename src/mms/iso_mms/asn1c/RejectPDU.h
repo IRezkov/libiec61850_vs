@@ -90,29 +90,34 @@ typedef enum RejectPDU__rejectReason__concludeErrorPDU {
 	RejectPDU__rejectReason__concludeErrorPDU_valueOutOfRange	= 2
 } e_RejectPDU__rejectReason__concludeErrorPDU;
 
+struct RejectPDU__rejectReason 
+{
+	RejectPDU__rejectReason_PR present;
+	union RejectPDU__rejectReason_u 
+	{
+		long	 confirmedRequestPDU;
+		long	 confirmedResponsePDU;
+		long	 confirmedErrorPDU;
+		long	 unconfirmedPDU;
+		INTEGER_t	 pduError;
+		NULL_t	 cancelRequestPDU;
+		NULL_t	 cancelResponsePDU;
+		NULL_t	 cancelErrorPDU;
+		long	 concludeRequestPDU;
+		long	 concludeResponsePDU;
+		long	 concludeErrorPDU;
+	} choice;
+
+	/* Context for parsing across buffer boundaries */
+	asn_struct_ctx_t _asn_ctx;
+};
+
 /* RejectPDU */
-typedef struct RejectPDU {
+typedef struct RejectPDU 
+{
 	Unsigned32_t	*originalInvokeID	/* OPTIONAL */;
-	struct RejectPDU__rejectReason {
-		RejectPDU__rejectReason_PR present;
-		union RejectPDU__rejectReason_u {
-			long	 confirmedRequestPDU;
-			long	 confirmedResponsePDU;
-			long	 confirmedErrorPDU;
-			long	 unconfirmedPDU;
-			INTEGER_t	 pduError;
-			NULL_t	 cancelRequestPDU;
-			NULL_t	 cancelResponsePDU;
-			NULL_t	 cancelErrorPDU;
-			long	 concludeRequestPDU;
-			long	 concludeResponsePDU;
-			long	 concludeErrorPDU;
-		} choice;
-		
-		/* Context for parsing across buffer boundaries */
-		asn_struct_ctx_t _asn_ctx;
-	} rejectReason;
-	
+	struct RejectPDU__rejectReason rejectReason;
+
 	/* Context for parsing across buffer boundaries */
 	asn_struct_ctx_t _asn_ctx;
 } RejectPDU_t;

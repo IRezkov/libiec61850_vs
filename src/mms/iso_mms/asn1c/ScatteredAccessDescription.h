@@ -25,17 +25,21 @@ extern "C" {
 struct VariableSpecification;
 struct AlternateAccess;
 
+struct ScatteredAccessDescription__Member 
+{
+	Identifier_t	*componentName	/* OPTIONAL */;
+	struct VariableSpecification	*variableSpecification;
+	struct AlternateAccess	*alternateAccess	/* OPTIONAL */;
+
+	/* Context for parsing across buffer boundaries */
+	asn_struct_ctx_t _asn_ctx;
+};
+
 /* ScatteredAccessDescription */
-typedef struct ScatteredAccessDescription {
-	A_SEQUENCE_OF(struct ScatteredAccessDescription__Member {
-		Identifier_t	*componentName	/* OPTIONAL */;
-		struct VariableSpecification	*variableSpecification;
-		struct AlternateAccess	*alternateAccess	/* OPTIONAL */;
-		
-		/* Context for parsing across buffer boundaries */
-		asn_struct_ctx_t _asn_ctx;
-	} ) list;
-	
+typedef struct ScatteredAccessDescription 
+{
+	A_SET_OF(ScatteredAccessDescription__Member)list;
+
 	/* Context for parsing across buffer boundaries */
 	asn_struct_ctx_t _asn_ctx;
 } ScatteredAccessDescription_t;

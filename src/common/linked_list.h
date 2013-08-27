@@ -54,4 +54,10 @@ int LinkedList_size(LinkedList list);
 void
 LinkedList_printStringList(LinkedList list);
 
+void
+LinkedList_destroyStatic(LinkedList list);
+
+void
+LinkedList_destroyDeep(LinkedList list, void (*valueDeleteFunction) (void*));
+
 #endif /* LINKED_LIST_H_ */

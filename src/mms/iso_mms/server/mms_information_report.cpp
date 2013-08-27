@@ -27,6 +27,9 @@
 #include "mms_common_internal.h"
 #include "mms_access_result.h"
 
+#include "ber_encoder.h"
+
+
 void
 MmsServerConnection_sendInformationReport(MmsServerConnection* self, char* domainId, char* itemId, LinkedList values)
 {

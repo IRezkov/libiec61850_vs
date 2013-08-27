@@ -26,7 +26,7 @@
 #ifndef THREAD_H_
 #define THREAD_H_
 
-#include <stdbool.h>
+#include "stdbool.h"
 
 /*! \addtogroup hal
    *

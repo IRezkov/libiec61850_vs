@@ -59,7 +59,7 @@ createValueCachesForDomains(MmsDevice* device)
 MmsServer
 MmsServer_create(IsoServer isoServer, MmsDevice* device)
 {
-    MmsServer self = calloc(1, sizeof(struct sMmsServer));
+    MmsServer self = (MmsServer) calloc(1, sizeof(struct sMmsServer));
 
     self->isoServer = isoServer;
     self->device = device;
@@ -123,15 +123,17 @@ void
 MmsServer_destroy(MmsServer self)
 {
     Map_deleteDeep(self->openConnections, false, closeConnection);
-    Map_deleteDeep(self->valueCaches, false, deleteSingleCache);
+    Map_deleteDeep(self->valueCaches, false, (void (__cdecl*)(void*))deleteSingleCache);
     Semaphore_destroy(self->modelMutex);
     free(self);
 }
 
+//TODO: отладить указатель self как указатель на структуру,
+//а не как двойной указатель
 MmsValue*
 MmsServer_getValueFromCache(MmsServer self, MmsDomain* domain, char* itemId)
 {
-    MmsValueCache cache = Map_getEntry(self->valueCaches, domain);
+    MmsValueCache cache = (MmsValueCache) Map_getEntry(self->valueCaches, domain);
 
     if (cache != NULL) {
         return MmsValueCache_lookupValue(cache, itemId);
@@ -143,7 +145,7 @@ MmsServer_getValueFromCache(MmsServer self, MmsDomain* domain, char* itemId)
 void
 MmsServer_insertIntoCache(MmsServer self, MmsDomain* domain, char* itemId, MmsValue* value)
 {
-    MmsValueCache cache = Map_getEntry(self->valueCaches, domain);
+    MmsValueCache cache = (MmsValueCache) Map_getEntry(self->valueCaches, domain);
 
     if (cache != NULL) {
         MmsValueCache_insertValue(cache, itemId, value);

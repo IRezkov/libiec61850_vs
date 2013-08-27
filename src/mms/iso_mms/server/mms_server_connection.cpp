@@ -29,6 +29,8 @@
 #include "libiec61850_platform_includes.h"
 #include "mms_server_internal.h"
 #include "iso_server.h"
+#include "ber_encoder.h"
+#include "ber_decode.h"
 
 #define REJECT_UNRECOGNIZED_SERVICE 1
 #define REJECT_UNKNOWN_PDU_TYPE 2
@@ -88,12 +90,12 @@ static uint8_t parameterCBB[] =
 
 static void
 writeMmsRejectPdu(int* invokeId, int reason, ByteBuffer* response) {
-	MmsPdu_t* mmsPdu = calloc(1, sizeof(MmsPdu_t));
+	MmsPdu_t* mmsPdu = (MmsPdu_t*) calloc(1, sizeof(MmsPdu_t));
 
 	mmsPdu->present = MmsPdu_PR_rejectPDU;
 
 	if (invokeId != NULL) {
-		mmsPdu->choice.rejectPDU.originalInvokeID = calloc(1, sizeof(Unsigned32_t));
+		mmsPdu->choice.rejectPDU.originalInvokeID = (Unsigned32_t*) calloc(1, sizeof(Unsigned32_t));
 		asn_long2INTEGER(mmsPdu->choice.rejectPDU.originalInvokeID, *invokeId);
 	}
 
@@ -198,7 +200,7 @@ parseInitiateRequestPdu(MmsServerConnection* self, uint8_t* buffer, int bufPos, 
 		uint8_t tag = buffer[bufPos++];
 		uint32_t length;
 
-		bufPos = BerDecoder_decodeLength(buffer, &length, bufPos, maxBufPos);
+		bufPos = BerDecoder_decodeLength(buffer, (int*) &length, bufPos, maxBufPos);
 
 		if (bufPos < 0)  {
 			// TODO write initiate error PDU!
@@ -236,7 +238,7 @@ parseInitiateRequestPdu(MmsServerConnection* self, uint8_t* buffer, int bufPos, 
 	return true;
 }
 
-static
+static void
 handleInitiateRequestPdu (
 		MmsServerConnection* self,
 		uint8_t* buffer, int bufPos, int maxBufPos,
@@ -270,10 +272,10 @@ handleConfirmedRequestPdu(
 		uint8_t tag = buffer[bufPos++];
 		uint32_t length;
 
-		bufPos = BerDecoder_decodeLength(buffer, &length, bufPos, maxBufPos);
+		bufPos = BerDecoder_decodeLength(buffer, (int*) &length, bufPos, maxBufPos);
 
 		if (bufPos < 0)  {
-			writeMmsRejectPdu(&invokeId, REJECT_UNRECOGNIZED_SERVICE, response);
+			writeMmsRejectPdu((int*) &invokeId, REJECT_UNRECOGNIZED_SERVICE, response);
 			return;
 		}
 
@@ -316,7 +318,7 @@ handleConfirmedRequestPdu(
 					invokeId, response);
 			break;
 		default:
-			writeMmsRejectPdu(&invokeId, REJECT_UNRECOGNIZED_SERVICE, response);
+			writeMmsRejectPdu((int*) &invokeId, REJECT_UNRECOGNIZED_SERVICE, response);
 			return;
 			break;
 		}
@@ -341,7 +343,7 @@ parseMmsPdu(MmsServerConnection* self, ByteBuffer* message, ByteBuffer* response
 	uint8_t pduType = buffer[bufPos++];
 	uint32_t pduLength;
 
-	bufPos = BerDecoder_decodeLength(buffer, &pduLength, bufPos, message->size);
+	bufPos = BerDecoder_decodeLength(buffer, (int*) &pduLength, bufPos, message->size);
 
 	if (bufPos < 0)
 		return MMS_ERROR;
@@ -395,7 +397,7 @@ MmsServerConnection_init(MmsServerConnection* connection, MmsServer server, IsoC
 	MmsServerConnection* self;
 
 	if (connection == NULL)
-		self = calloc(1, sizeof(MmsServerConnection));
+		self = (MmsServerConnection*) calloc(1, sizeof(MmsServerConnection));
 	else
 		self = connection;
 
@@ -415,7 +417,7 @@ MmsServerConnection_init(MmsServerConnection* connection, MmsServer server, IsoC
 void
 MmsServerConnection_destroy(MmsServerConnection* self)
 {
-	LinkedList_destroyDeep(self->namedVariableLists, MmsNamedVariableList_destroy);
+	LinkedList_destroyDeep(self->namedVariableLists, (void (__cdecl*)(void*)) MmsNamedVariableList_destroy);
 	free(self);
 }
 

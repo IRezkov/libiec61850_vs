@@ -7,6 +7,8 @@
 #include <constr_SET_OF.h>
 #include <asn_SET_OF.h>
 
+#define APC_EXTENSIBLE 0x4
+
 /*
  * Number of bytes left for this structure.
  * (ctx->left) indicates the number of bytes _transferred_ for the structure.

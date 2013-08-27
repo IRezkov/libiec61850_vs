@@ -50,6 +50,6 @@ int main(int argc, char** argv)
 	MmsConnection_destroy(con);
 	
 	
-	getch();
+	_getch();
 }
 

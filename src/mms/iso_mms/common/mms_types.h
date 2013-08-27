@@ -81,7 +81,8 @@ struct sMmsValue {
  */
 typedef struct sMmsTypeSpecification MmsTypeSpecification;
 
-struct sMmsTypeSpecification {
+struct sMmsTypeSpecification 
+{
     MmsType type;
     char* name;
     union uMmsTypeSpecification

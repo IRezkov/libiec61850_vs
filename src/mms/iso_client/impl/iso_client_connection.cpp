@@ -35,6 +35,9 @@
 #include "iso_client_connection.h"
 #include "acse.h"
 
+IsoPresentationIndication IsoPresentation_parseAcceptMessage(IsoPresentation* self, ByteBuffer* byteBuffer);
+IsoPresentationIndication IsoPresentation_createUserData(IsoPresentation* self, ByteBuffer* writeBuffer, ByteBuffer* payload);
+
 #define STATE_IDLE 0
 #define STATE_ASSOCIATED 1
 #define STATE_ERROR 2
@@ -99,16 +102,16 @@ connectionHandlingThread(void* threadParameter)
 IsoClientConnection
 IsoClientConnection_create(IsoIndicationCallback callback, void* callbackParameter)
 {
-	IsoClientConnection self = calloc(1, sizeof(struct sIsoClientConnection));
+	IsoClientConnection self = (IsoClientConnection) calloc(1, sizeof(struct sIsoClientConnection));
 
 	self->callback = callback;
 	self->callbackParameter = callbackParameter;
 	self->state = STATE_IDLE;
 
-	self->buffer1 = malloc(ISO_CLIENT_BUFFER_SIZE);
-	self->buffer2 = malloc(ISO_CLIENT_BUFFER_SIZE);
+	self->buffer1 = (uint8_t*) malloc(ISO_CLIENT_BUFFER_SIZE);
+	self->buffer2 = (uint8_t*) malloc(ISO_CLIENT_BUFFER_SIZE);
 
-	self->payloadBuffer = calloc(1, sizeof(ByteBuffer));
+	self->payloadBuffer = (ByteBuffer*) calloc(1, sizeof(ByteBuffer));
 
 	return self;
 }
@@ -176,11 +179,11 @@ IsoClientConnection_associate(IsoClientConnection self, IsoConnectionParameters*
 	if (!Socket_connect(socket, params->hostname, params->tcpPort))
 		goto returnError;
 
-	self->cotpBuf = malloc(ISO_CLIENT_BUFFER_SIZE);
-	self->cotpBuffer = calloc(1, sizeof(ByteBuffer));
+	self->cotpBuf = (uint8_t*) malloc(ISO_CLIENT_BUFFER_SIZE);
+	self->cotpBuffer = (ByteBuffer*) calloc(1, sizeof(ByteBuffer));
 	ByteBuffer_wrap(self->cotpBuffer, self->cotpBuf, 0, ISO_CLIENT_BUFFER_SIZE);
 
-	self->cotpConnection = calloc(1, sizeof(CotpConnection));
+	self->cotpConnection = (CotpConnection*) calloc(1, sizeof(CotpConnection));
 	CotpConnection_init(self->cotpConnection, socket, self->cotpBuffer);
 
 	/* COTP handshake */
@@ -208,14 +211,14 @@ IsoClientConnection_associate(IsoClientConnection self, IsoConnectionParameters*
 	ByteBuffer presentationBuffer;
 	ByteBuffer_wrap(&presentationBuffer, self->buffer2, 0, ISO_CLIENT_BUFFER_SIZE);
 
-	self->presentation = calloc(1, sizeof(IsoPresentation));
+	self->presentation = (IsoPresentation*) calloc(1, sizeof(IsoPresentation));
 	IsoPresentation_init(self->presentation);
 	IsoPresentation_createConnectPdu(self->presentation, &presentationBuffer, &acseBuffer);
 
 	ByteBuffer sessionBuffer;
 	ByteBuffer_wrap(&sessionBuffer, self->buffer1, 0, ISO_CLIENT_BUFFER_SIZE);
 
-	self->session = calloc(1, sizeof(IsoSession));
+	self->session = (IsoSession*) calloc(1, sizeof(IsoSession));
 	IsoSession_init(self->session);
 	IsoSession_createConnectSpdu(self->session, &sessionBuffer,
 			ByteBuffer_getSize(&presentationBuffer));

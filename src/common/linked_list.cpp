@@ -38,7 +38,7 @@ LinkedList_create()
 {
 	LinkedList newList;
 
-	newList = malloc(sizeof(struct sLinkedList));
+	newList = (LinkedList) malloc(sizeof(struct sLinkedList));
 	newList->data = NULL;
 	newList->next = NULL;
 

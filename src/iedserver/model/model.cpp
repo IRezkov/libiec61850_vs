@@ -99,13 +99,13 @@ DataObject_hasFCData(DataObject* dataObject, FunctionalConstraint fc)
 bool
 LogicalNode_hasFCData(LogicalNode* node, FunctionalConstraint fc)
 {
-	DataObject* dataObject = node->firstChild;
+	DataObject* dataObject = (DataObject*) node->firstChild;
 
 	while (dataObject != NULL) {
 		if (DataObject_hasFCData(dataObject, fc))
 			return true;
 
-		dataObject = dataObject->sibling;
+		dataObject = (DataObject*) dataObject->sibling;
 	}
 
 	return false;
@@ -131,7 +131,7 @@ LogicalDevice_getLogicalNodeCount(LogicalDevice* logicalDevice)
 static int
 createObjectReference(ModelNode* node, char* objectReference)
 {
-    ModelNodeType type;
+    //ModelNodeType type;
 
     int bufPos;
 
@@ -172,7 +172,7 @@ char*
 ModelNode_getObjectReference(ModelNode* node, char* objectReference)
 {
     if (objectReference == NULL)
-        objectReference = malloc(130);
+        objectReference = (char*) malloc(130);
 
     int bufPos = createObjectReference(node, objectReference);
 

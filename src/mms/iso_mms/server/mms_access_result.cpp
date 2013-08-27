@@ -23,6 +23,7 @@
 
 #include "mms_access_result.h"
 #include "mms_server_internal.h"
+#include "ber_encoder.h"
 
 static int
 encodeArrayAccessResult(MmsValue* value, uint8_t* buffer, int bufPos, bool encode)

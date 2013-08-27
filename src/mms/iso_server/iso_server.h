@@ -51,7 +51,7 @@ typedef struct sIsoConnection* IsoConnection;
 
 struct sIsoServerCallbacks {
 	void (*clientConnected) (IsoConnection connection);
-} IsoServerCallbacks;
+}; //IsoServerCallbacks;
 
 typedef void (*ConnectionIndicationHandler) (IsoConnectionIndication indication,
 		void* parameter, IsoConnection connection);

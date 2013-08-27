@@ -41,7 +41,7 @@ createTypeSpecification (
 				(long) namedVariable->typeSpec.array.elementCount);
 
 		typeSpec->choice.array.packed = NULL;
-		typeSpec->choice.array.elementType = calloc(1, sizeof(TypeSpecification_t));
+		typeSpec->choice.array.elementType = (TypeSpecification *) calloc(1, sizeof(TypeSpecification_t));
 
 		createTypeSpecification(namedVariable->typeSpec.array.elementTypeSpec,
 				typeSpec->choice.array.elementType);
@@ -56,26 +56,26 @@ createTypeSpecification (
 		typeSpec->choice.structure.components.list.size = componentCount;
 
 		typeSpec->choice.structure.components.list.array
-			= calloc(componentCount, sizeof(StructComponent_t*));
+			= (StructComponent **) calloc(componentCount, sizeof(StructComponent_t*));
 
 		int i;
 
 		for (i = 0; i < componentCount; i++) {
 
 			typeSpec->choice.structure.components.list.array[i] =
-					calloc(1, sizeof(StructComponent_t));
+					(StructComponent *) calloc(1, sizeof(StructComponent_t));
 
 			typeSpec->choice.structure.components.list.array[i]->componentName =
-					calloc(1, sizeof(Identifier_t));
+					(Identifier_t *) calloc(1, sizeof(Identifier_t));
 
 			typeSpec->choice.structure.components.list.array[i]->componentName->buf =
-			        copyString(namedVariable->typeSpec.structure.elements[i]->name);
+			        (uint8_t*) copyString(namedVariable->typeSpec.structure.elements[i]->name);
 
 			typeSpec->choice.structure.components.list.array[i]->componentName->size =
 					strlen(namedVariable->typeSpec.structure.elements[i]->name);
 
 			typeSpec->choice.structure.components.list.array[i]->componentType =
-					calloc(1, sizeof(TypeSpecification_t));
+					(TypeSpecification *) calloc(1, sizeof(TypeSpecification_t));
 
 			createTypeSpecification(namedVariable->typeSpec.structure.elements[i],
 					typeSpec->choice.structure.components.list.array[i]->componentType);

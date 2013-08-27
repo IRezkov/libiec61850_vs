@@ -116,7 +116,7 @@ writeStaticConnectResponseHeader(CotpConnection* self)
         return ERROR;
     if (ByteStream_writeUint8(self->stream, self->srcRef & 0xff) != 1)
         return ERROR;
-    if (ByteStream_writeUint8(self->stream, self->class) != 1)
+    if (ByteStream_writeUint8(self->stream, self->class_) != 1)
         return ERROR;
 
     return OK;
@@ -308,49 +308,56 @@ cotp_parse_options(CotpConnection* self, int opt_len)
         if (DEBUG)
             printf("option: %02x len: %02x\n", option_type, option_len);
 
-        switch (option_type) {
-        case 0xc0:
-            if (ByteStream_readUint8(self->stream, &uint8_value) == -1)
-                goto cpo_error;
-            read_bytes++;
+		  switch (option_type) 
+		  {
+		  case 0xc0:
+			  {
+				  if (ByteStream_readUint8(self->stream, &uint8_value) == -1)
+					  goto cpo_error;
+				  read_bytes++;
 
-            int requestedTpduSize = (1 << uint8_value);
-            CotpConnection_setTpduSize(self, requestedTpduSize);
+				  int requestedTpduSize = (1 << uint8_value);
+				  CotpConnection_setTpduSize(self, requestedTpduSize);
+				  break;
+			  }
 
-            break;
-        case 0xc1:
-            if (option_len == 2) {
-                if (ByteStream_readUint16(self->stream, &uint16_value) == -1)
-                    goto cpo_error;
-                read_bytes += 2;
-                self->options.tsap_id_src = (int32_t) uint16_value;
-            } else
-                goto cpo_error;
-            break;
-        case 0xc2:
-            if (option_len == 2) {
-                if (ByteStream_readUint16(self->stream, &uint16_value) == -1)
-                    goto cpo_error;
-                self->options.tsap_id_dst = (int32_t) uint16_value;
-                read_bytes += 2;
-            } else
-                goto cpo_error;
-            break;
-        default:
+		  case 0xc1:
+			  if (option_len == 2) 
+			  {
+				  if (ByteStream_readUint16(self->stream, &uint16_value) == -1)
+					  goto cpo_error;
+				  read_bytes += 2;
+				  self->options.tsap_id_src = (int32_t) uint16_value;
+			  } else
+				  goto cpo_error;
+			  break;
 
-            if (DEBUG)
-                printf("Unknown option %02x\n", option_type);
+		  case 0xc2:
+			  if (option_len == 2) 
+			  {
+				  if (ByteStream_readUint16(self->stream, &uint16_value) == -1)
+					  goto cpo_error;
+				  self->options.tsap_id_dst = (int32_t) uint16_value;
+				  read_bytes += 2;
+			  } else
+				  goto cpo_error;
+			  break;
 
-            for (i = 0; i < opt_len; i++) {
-                if (ByteStream_readUint8(self->stream, &uint8_value) == -1)
-                    goto cpo_error;
-            }
+		  default:
 
-            read_bytes += opt_len;
+			  if (DEBUG)
+				  printf("Unknown option %02x\n", option_type);
 
-            break;
-        }
-    }
+			  for (i = 0; i < opt_len; i++) {
+				  if (ByteStream_readUint8(self->stream, &uint8_value) == -1)
+					  goto cpo_error;
+			  }
+
+			  read_bytes += opt_len;
+
+			  break;
+		  }
+	 }
 
     return 1;
 
@@ -368,8 +375,12 @@ CotpConnection_init(CotpConnection* self, Socket socket,
     self->socket = socket;
     self->srcRef = -1;
     self->dstRef = -1;
-    self->class = -1;
-    self->options = (CotpOptions ) { .tpdu_size = 0, .tsap_id_src = -1, .tsap_id_dst = -1 };
+    self->class_ = -1;
+    //self->options = (CotpOptions ) { .tpdu_size = 0, .tsap_id_src = -1, .tsap_id_dst = -1 };
+	 self->options.tpdu_size = 0;
+	 self->options.tsap_id_src = -1;
+	 self->options.tsap_id_dst = -1;
+
     self->payload = payloadBuffer;
 
     /* default TPDU size is maximum size */
@@ -443,7 +454,7 @@ cotp_parse_CRequest_tpdu(CotpConnection* self, uint8_t len)
 {
     uint16_t dstRef;
     uint16_t srcRef;
-    uint8_t class;
+    uint8_t class__;
 
     if (ByteStream_readUint16(self->stream, &dstRef) != 2)
         return -1;
@@ -455,10 +466,10 @@ cotp_parse_CRequest_tpdu(CotpConnection* self, uint8_t len)
     else
         self->srcRef = srcRef;
 
-    if (ByteStream_readUint8(self->stream, &class) != 1)
+    if (ByteStream_readUint8(self->stream, &class__) != 1)
         return -1;
     else
-        self->class = class;
+        self->class_ = class__;
 
     return cotp_parse_options(self, len - 6);
 }
@@ -468,7 +479,7 @@ cotp_parse_CConfirm_tpdu(CotpConnection* self, uint8_t len)
 {
     uint16_t dstRef;
     uint16_t srcRef;
-    uint8_t class;
+    uint8_t class__;
 
     if (ByteStream_readUint16(self->stream, &dstRef) != 2)
         return -1;
@@ -480,10 +491,10 @@ cotp_parse_CConfirm_tpdu(CotpConnection* self, uint8_t len)
     else
         self->dstRef = srcRef;
 
-    if (ByteStream_readUint8(self->stream, &class) != 1)
+    if (ByteStream_readUint8(self->stream, &class__) != 1)
         return -1;
     else
-        self->class = class;
+        self->class_ = class__;
 
     return cotp_parse_options(self, len - 6);
 }

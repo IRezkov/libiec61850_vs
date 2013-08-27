@@ -39,7 +39,7 @@ typedef struct {
     int state;
     int srcRef;
     int dstRef;
-    int class;
+    int class_;
     Socket socket;
     CotpOptions options;
     uint8_t eot;

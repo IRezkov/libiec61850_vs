@@ -24,7 +24,9 @@ static ber_tlv_tag_t asn_DEF_listOfData_tags_3[] = {
 	(ASN_TAG_CLASS_CONTEXT | (0 << 2)),
 	(ASN_TAG_CLASS_UNIVERSAL | (16 << 2))
 };
-static asn_SET_OF_specifics_t asn_SPC_listOfData_specs_3 = {
+
+static asn_SET_OF_specifics_t asn_SPC_listOfData_specs_3 = 
+{
 	sizeof(struct WriteRequest__listOfData),
 	offsetof(struct WriteRequest__listOfData, _asn_ctx),
 	2,	/* XER encoding is XMLValueList */

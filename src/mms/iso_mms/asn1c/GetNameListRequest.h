@@ -30,20 +30,25 @@ typedef enum GetNameListRequest__objectScope_PR {
 	GetNameListRequest__objectScope_PR_aaSpecific
 } GetNameListRequest__objectScope_PR;
 
+struct GetNameListRequest__objectScope 
+{
+	GetNameListRequest__objectScope_PR present;
+	union GetNameListRequest__objectScope_u 
+	{
+		NULL_t	 vmdSpecific;
+		Identifier_t	 domainSpecific;
+		NULL_t	 aaSpecific;
+	} choice;
+
+	/* Context for parsing across buffer boundaries */
+	asn_struct_ctx_t _asn_ctx;
+};
+
 /* GetNameListRequest */
-typedef struct GetNameListRequest {
+typedef struct GetNameListRequest 
+{
 	ObjectClass_t	 objectClass;
-	struct GetNameListRequest__objectScope {
-		GetNameListRequest__objectScope_PR present;
-		union GetNameListRequest__objectScope_u {
-			NULL_t	 vmdSpecific;
-			Identifier_t	 domainSpecific;
-			NULL_t	 aaSpecific;
-		} choice;
-		
-		/* Context for parsing across buffer boundaries */
-		asn_struct_ctx_t _asn_ctx;
-	} objectScope;
+	struct GetNameListRequest__objectScope objectScope;
 	Identifier_t	*continueAfter	/* OPTIONAL */;
 	
 	/* Context for parsing across buffer boundaries */

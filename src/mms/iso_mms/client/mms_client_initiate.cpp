@@ -39,18 +39,18 @@ createInitiateRequestPdu(MmsConnection self)
 {
 	InitiateRequestPdu_t request;
 
-	request.localDetailCalling = calloc(1, sizeof(Integer32_t));
+	request.localDetailCalling = (Integer32_t*) calloc(1, sizeof(Integer32_t));
 	*(request.localDetailCalling) = self->parameters.maxPduSize;
 
 	request.proposedMaxServOutstandingCalled = DEFAULT_MAX_SERV_OUTSTANDING_CALLED;
 	request.proposedMaxServOutstandingCalling = DEFAULT_MAX_SERV_OUTSTANDING_CALLING;
 
-	request.proposedDataStructureNestingLevel = calloc(1, sizeof(Integer8_t));
+	request.proposedDataStructureNestingLevel = (Integer8_t*) calloc(1, sizeof(Integer8_t));
 	*(request.proposedDataStructureNestingLevel) = DEFAULT_DATA_STRUCTURE_NESTING_LEVEL;
 
 	request.mmsInitRequestDetail.proposedParameterCBB.size = 2;
 	request.mmsInitRequestDetail.proposedParameterCBB.bits_unused = 5;
-	request.mmsInitRequestDetail.proposedParameterCBB.buf = calloc(2, sizeof(uint8_t));
+	request.mmsInitRequestDetail.proposedParameterCBB.buf = (uint8_t*) calloc(2, sizeof(uint8_t));
 	request.mmsInitRequestDetail.proposedParameterCBB.buf[0] = 0xf1;
 	request.mmsInitRequestDetail.proposedParameterCBB.buf[1] = 0x00;
 
@@ -75,7 +75,7 @@ freeInitiateRequestPdu(InitiateRequestPdu_t request)
 int
 mmsClient_createInitiateRequest(MmsConnection self, ByteBuffer* message)
 {
-	MmsPdu_t* mmsPdu = calloc(1, sizeof(MmsPdu_t));
+	MmsPdu_t* mmsPdu = (MmsPdu_t*) calloc(1, sizeof(MmsPdu_t));
 
 	mmsPdu->present = MmsPdu_PR_initiateRequestPdu;
 
@@ -84,7 +84,7 @@ mmsClient_createInitiateRequest(MmsConnection self, ByteBuffer* message)
 	asn_enc_rval_t rval;
 
 	rval = der_encode(&asn_DEF_MmsPdu, mmsPdu,
-	            mmsClient_write_out, (void*) message);
+	            (asn_app_consume_bytes_f (__cdecl *)) mmsClient_write_out, (void*) message);
 
 	if (DEBUG) xer_fprint(stdout, &asn_DEF_MmsPdu, mmsPdu);
 

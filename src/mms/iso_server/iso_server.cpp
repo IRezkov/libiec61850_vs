@@ -51,23 +51,23 @@ isoServerThread(void* isoServerParam)
 
     Socket connectionSocket;
 
-    self->serverSocket = TcpServerSocket_create(NULL, self->tcpPort);
+    self->serverSocket = (Socket) TcpServerSocket_create(NULL, self->tcpPort);
 
     if (self->serverSocket == NULL) {
         self->state = ISO_SVR_STATE_ERROR;
         goto cleanUp;
     }
 
-    ServerSocket_setBacklog(self->serverSocket, BACKLOG);
+    ServerSocket_setBacklog((ServerSocket) self->serverSocket, BACKLOG);
 
-    ServerSocket_listen(self->serverSocket);
+    ServerSocket_listen((ServerSocket) self->serverSocket);
 
     self->state = ISO_SVR_STATE_RUNNING;
 
     while (self->state == ISO_SVR_STATE_RUNNING)
     {
 
-        if ((connectionSocket = ServerSocket_accept(self->serverSocket)) == NULL) {
+        if ((connectionSocket = ServerSocket_accept((ServerSocket) self->serverSocket)) == NULL) {
             break;;
         }
         else {
@@ -89,7 +89,7 @@ isoServerThread(void* isoServerParam)
 IsoServer
 IsoServer_create()
 {
-    IsoServer self = calloc(1, sizeof(struct sIsoServer));
+    IsoServer self = (IsoServer) calloc(1, sizeof(struct sIsoServer));
 
     self->state = ISO_SVR_STATE_IDLE;
     self->tcpPort = TCP_PORT;
@@ -115,7 +115,7 @@ IsoServer_setAuthenticationParameter(IsoServer self, AcseAuthenticationParameter
     self->authParameter = authParameter;
 }
 
-inline AcseAuthenticationParameter
+AcseAuthenticationParameter
 IsoServer_getAuthenticationParameter(IsoServer self)
 {
     return self->authParameter;
@@ -124,7 +124,7 @@ IsoServer_getAuthenticationParameter(IsoServer self)
 void
 IsoServer_startListening(IsoServer self)
 {
-    self->serverThread = Thread_create(isoServerThread, self, false);
+    self->serverThread = Thread_create((ThreadExecutionFunction)isoServerThread, self, false);
 
     Thread_start(self->serverThread);
 
@@ -141,7 +141,7 @@ IsoServer_stopListening(IsoServer self)
     self->state = ISO_SVR_STATE_STOPPED;
 
     if (self->serverSocket != NULL) {
-        ServerSocket_destroy(self->serverSocket);
+        ServerSocket_destroy((ServerSocket) self->serverSocket);
         self->serverSocket = NULL;
     }
 

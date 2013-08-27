@@ -66,7 +66,7 @@ initialize(ControlObject* self)
     if (!(self->initialized)) {
         char* ctlModelName = createString(4, self->lnName, "$CF$", self->name, "$ctlModel");
 
-        MmsValue* ctlModel = MmsServer_getValueFromCache(self->mmsServer,
+        MmsValue* ctlModel = MmsServer_getValueFromCache(*self->mmsServer,
                 self->mmsDomain, ctlModelName);
 
         free(ctlModelName);
@@ -83,7 +83,7 @@ initialize(ControlObject* self)
 
                 self->sbo = MmsValue_newVisibleString(controlObjectReference);
 
-                MmsValue* sboTimeout = MmsServer_getValueFromCache(self->mmsServer,
+                MmsValue* sboTimeout = MmsServer_getValueFromCache(*self->mmsServer,
                                 self->mmsDomain, sboTimeoutName);
 
                 free(controlObjectReference);
@@ -107,7 +107,7 @@ initialize(ControlObject* self)
 ControlObject*
 ControlObject_create(MmsServer* mmsServer, MmsDomain* domain, char* lnName, char* name)
 {
-    ControlObject* self = calloc(1, sizeof(ControlObject));
+    ControlObject* self = (ControlObject*) calloc(1, sizeof(ControlObject));
 
     self->name = name;
     self->lnName = lnName;
@@ -278,6 +278,7 @@ ControlObject_installListener(ControlObject* self, ControlHandler listener, void
 {
     self->listener = listener;
     self->listenerParameter = parameter;
+	 return true;
 }
 
 ControlObject*

@@ -62,9 +62,9 @@ struct sMmsGooseControlBlock {
 MmsGooseControlBlock
 MmsGooseControlBlock_create()
 {
-    MmsGooseControlBlock self = calloc(1, sizeof(struct sMmsGooseControlBlock));
+    MmsGooseControlBlock self = (MmsGooseControlBlock) calloc(1, sizeof(struct sMmsGooseControlBlock));
 
-    self->publisherMutex = Semaphore_create(1);
+    self->publisherMutex = (Semaphore*) Semaphore_create(1);
 
     return self;
 }
@@ -264,68 +264,68 @@ MmsGooseControlBlock_getGCBValue(MmsGooseControlBlock self, char* elementName)
 static MmsTypeSpecification*
 createMmsGooseControlBlock(char* gcbName)
 {
-    MmsTypeSpecification* gcb = calloc(1, sizeof(MmsTypeSpecification));
+    MmsTypeSpecification* gcb = (MmsTypeSpecification*) calloc(1, sizeof(MmsTypeSpecification));
     gcb->name = copyString(gcbName);
     gcb->type = MMS_STRUCTURE;
     gcb->typeSpec.structure.elementCount = 9;
-    gcb->typeSpec.structure.elements = calloc(9, sizeof(MmsTypeSpecification*));
+    gcb->typeSpec.structure.elements = (MmsTypeSpecification**) calloc(9, sizeof(MmsTypeSpecification*));
 
     MmsTypeSpecification* namedVariable;
 
-    namedVariable = calloc(1, sizeof(MmsTypeSpecification));
+    namedVariable = (MmsTypeSpecification*) calloc(1, sizeof(MmsTypeSpecification));
     namedVariable->name = copyString("GoEna");
     namedVariable->type = MMS_BOOLEAN;
 
     gcb->typeSpec.structure.elements[0] = namedVariable;
 
-    namedVariable = calloc(1, sizeof(MmsTypeSpecification));
+    namedVariable = (MmsTypeSpecification*) calloc(1, sizeof(MmsTypeSpecification));
     namedVariable->name = copyString("GoID");
     namedVariable->typeSpec.visibleString = -129;
     namedVariable->type = MMS_VISIBLE_STRING;
 
     gcb->typeSpec.structure.elements[1] = namedVariable;
 
-    namedVariable = calloc(1, sizeof(MmsTypeSpecification));
+    namedVariable = (MmsTypeSpecification*) calloc(1, sizeof(MmsTypeSpecification));
     namedVariable->name = copyString("DatSet");
     namedVariable->typeSpec.visibleString = -129;
     namedVariable->type = MMS_VISIBLE_STRING;
 
     gcb->typeSpec.structure.elements[2] = namedVariable;
 
-    namedVariable = calloc(1, sizeof(MmsTypeSpecification));
+    namedVariable = (MmsTypeSpecification*) calloc(1, sizeof(MmsTypeSpecification));
     namedVariable->name = copyString("ConfRev");
     namedVariable->type = MMS_UNSIGNED;
     namedVariable->typeSpec.unsignedInteger = 32;
 
     gcb->typeSpec.structure.elements[3] = namedVariable;
 
-    namedVariable = calloc(1, sizeof(MmsTypeSpecification));
+    namedVariable = (MmsTypeSpecification*) calloc(1, sizeof(MmsTypeSpecification));
     namedVariable->name = copyString("NdsCom");
     namedVariable->type = MMS_BOOLEAN;
 
     gcb->typeSpec.structure.elements[4] = namedVariable;
 
-    namedVariable = calloc(1, sizeof(MmsTypeSpecification));
+    namedVariable = (MmsTypeSpecification*) calloc(1, sizeof(MmsTypeSpecification));
     namedVariable->name = copyString("DstAddress");
     MmsMapping_createPhyComAddrStructure(namedVariable);
 
     gcb->typeSpec.structure.elements[5] = namedVariable;
 
-    namedVariable = calloc(1, sizeof(MmsTypeSpecification));
+    namedVariable = (MmsTypeSpecification*) calloc(1, sizeof(MmsTypeSpecification));
     namedVariable->name = copyString("MinTime");
     namedVariable->type = MMS_UNSIGNED;
     namedVariable->typeSpec.unsignedInteger = 32;
 
     gcb->typeSpec.structure.elements[6] = namedVariable;
 
-    namedVariable = calloc(1, sizeof(MmsTypeSpecification));
+    namedVariable = (MmsTypeSpecification*) calloc(1, sizeof(MmsTypeSpecification));
     namedVariable->name = copyString("MaxTime");
     namedVariable->type = MMS_UNSIGNED;
     namedVariable->typeSpec.unsignedInteger = 32;
 
     gcb->typeSpec.structure.elements[7] = namedVariable;
 
-    namedVariable = calloc(1, sizeof(MmsTypeSpecification));
+    namedVariable = (MmsTypeSpecification*) calloc(1, sizeof(MmsTypeSpecification));
     namedVariable->name = copyString("FixedOffs");
     namedVariable->type = MMS_BOOLEAN;
 
@@ -371,13 +371,13 @@ MmsTypeSpecification*
 GOOSE_createGOOSEControlBlocks(MmsMapping* self, MmsDomain* domain,
         LogicalNode* logicalNode, int gseCount)
 {
-    MmsTypeSpecification* namedVariable = calloc(1,
+    MmsTypeSpecification* namedVariable = (MmsTypeSpecification*) calloc(1,
             sizeof(MmsTypeSpecification));
     namedVariable->name = copyString("GO");
     namedVariable->type = MMS_STRUCTURE;
 
     namedVariable->typeSpec.structure.elementCount = gseCount;
-    namedVariable->typeSpec.structure.elements = calloc(gseCount,
+    namedVariable->typeSpec.structure.elements = (MmsTypeSpecification**) calloc(gseCount,
             sizeof(MmsTypeSpecification*));
 
     int currentGCB = 0;

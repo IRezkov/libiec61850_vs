@@ -85,12 +85,12 @@ cleanUp:
 static VariableSpecification_t*
 createNewDomainVariableSpecification(char* domainId, char* itemId)
 {
-	VariableSpecification_t* varSpec = calloc(1, sizeof(ListOfVariableSeq_t));
+	VariableSpecification_t* varSpec = (VariableSpecification_t*) calloc(1, sizeof(ListOfVariableSeq_t));
 	varSpec->present = VariableSpecification_PR_name;
 	varSpec->choice.name.present = ObjectName_PR_domainspecific;
-	varSpec->choice.name.choice.domainspecific.domainId.buf = domainId;
+	varSpec->choice.name.choice.domainspecific.domainId.buf = (uint8_t*) domainId;
 	varSpec->choice.name.choice.domainspecific.domainId.size = strlen(domainId);
-	varSpec->choice.name.choice.domainspecific.itemId.buf = itemId;
+	varSpec->choice.name.choice.domainspecific.itemId.buf = (uint8_t*) itemId;
 	varSpec->choice.name.choice.domainspecific.itemId.size = strlen(itemId);
 
 	return varSpec;
@@ -112,20 +112,20 @@ mmsClient_createWriteRequest(long invokeId, char* domainId, char* itemId, MmsVal
 	request->variableAccessSpecification.choice.listOfVariable.list.count = 1;
 	request->variableAccessSpecification.choice.listOfVariable.list.size = 1;
 	request->variableAccessSpecification.choice.listOfVariable.list.array =
-			calloc(1, sizeof(ListOfVariableSeq_t*));
+			(ListOfVariableSeq **) calloc(1, sizeof(ListOfVariableSeq_t*));
 	request->variableAccessSpecification.choice.listOfVariable.list.array[0] =
-			createNewDomainVariableSpecification(domainId, itemId);
+			(ListOfVariableSeq *) createNewDomainVariableSpecification(domainId, itemId);
 
 	/* Create list of typed data values */
 	request->listOfData.list.count = 1;
 	request->listOfData.list.size = 1;
-	request->listOfData.list.array = calloc(1, sizeof(struct Data*));
+	request->listOfData.list.array = (Data**) calloc(1, sizeof(struct Data*));
 	request->listOfData.list.array[0] = mmsMsg_createBasicDataElement(value);
 
 	asn_enc_rval_t rval;
 
 	rval = der_encode(&asn_DEF_MmsPdu, mmsPdu,
-				mmsClient_write_out, (void*) writeBuffer);
+				(asn_app_consume_bytes_f (__cdecl *)) mmsClient_write_out, (void*) writeBuffer);
 
 	if (DEBUG) xer_fprint(stdout, &asn_DEF_MmsPdu, mmsPdu);
 

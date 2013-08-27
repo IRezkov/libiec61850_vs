@@ -12,6 +12,8 @@
 #include <asn_internal.h>
 #include <NativeEnumerated.h>
 
+#define APC_EXTENSIBLE 0x4
+
 /*
  * NativeEnumerated basic type description.
  */
@@ -127,8 +129,8 @@ NativeEnumerated_decode_uper(asn_codec_ctx_t *opt_codec_ctx,
 
 static int
 NativeEnumerated__compar_value2enum(const void *ap, const void *bp) {
-	const asn_INTEGER_enum_map_t *a = ap;
-	const asn_INTEGER_enum_map_t *b = bp;
+	const asn_INTEGER_enum_map_t *a = (const asn_INTEGER_enum_map_t *) ap;
+	const asn_INTEGER_enum_map_t *b = (const asn_INTEGER_enum_map_t *) bp;
 	if(a->nat_value == b->nat_value)
 		return 0;
 	if(a->nat_value < b->nat_value)
@@ -162,7 +164,7 @@ NativeEnumerated_encode_uper(asn_TYPE_descriptor_t *td,
 	if(native < 0) _ASN_ENCODE_FAILED;
 
 	key.nat_value = native;
-	kf = bsearch(&key, specs->value2enum, specs->map_count,
+	kf = (asn_INTEGER_enum_map_t *) bsearch(&key, specs->value2enum, specs->map_count,
 		sizeof(key), NativeEnumerated__compar_value2enum);
 	if(!kf) {
 		ASN_DEBUG("No element corresponds to %ld", native);

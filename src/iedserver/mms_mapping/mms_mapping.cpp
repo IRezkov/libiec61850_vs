@@ -30,6 +30,18 @@
 #include "mms_goose.h"
 #include "reporting.h"
 
+MmsValueIndication
+Control_writeAccessControlObject(MmsMapping* self, MmsDomain* domain, char* variableIdOrig,
+                         MmsValue* value);
+
+MmsValue*
+Control_readAccessControlObject(MmsMapping* self, MmsDomain* domain, char* variableIdOrig);
+
+ControlObject*
+Control_lookupControlObject(MmsMapping* self, MmsDomain* domain, char* lnName, char* objectName);
+
+//struct sIsoServerCallbacks IsoServerCallbacks;
+
 typedef struct sAttributeObserver {
     DataAttribute* attribute;
     void (*handler) (DataAttribute* dataAttribute);
@@ -40,30 +52,29 @@ MmsMapping_createPhyComAddrStructure(MmsTypeSpecification* namedVariable)
 {
     namedVariable->type = MMS_STRUCTURE;
     namedVariable->typeSpec.structure.elementCount = 4;
-    namedVariable->typeSpec.structure.elements = calloc(4,
-            sizeof(MmsTypeSpecification*));
+    namedVariable->typeSpec.structure.elements = (MmsTypeSpecification**) calloc(4, sizeof(MmsTypeSpecification*));
 
     MmsTypeSpecification* element;
 
-    element = calloc(1, sizeof(MmsTypeSpecification));
+    element = (MmsTypeSpecification*) calloc(1, sizeof(MmsTypeSpecification));
     element->name = copyString("Addr");
     element->type = MMS_OCTET_STRING;
     element->typeSpec.octetString = 6;
     namedVariable->typeSpec.structure.elements[0] = element;
 
-    element = calloc(1, sizeof(MmsTypeSpecification));
+    element = (MmsTypeSpecification*) calloc(1, sizeof(MmsTypeSpecification));
     element->name = copyString("PRIORITY");
     element->type = MMS_UNSIGNED;
     element->typeSpec.unsignedInteger = 8;
     namedVariable->typeSpec.structure.elements[1] = element;
 
-    element = calloc(1, sizeof(MmsTypeSpecification));
+    element = (MmsTypeSpecification*) calloc(1, sizeof(MmsTypeSpecification));
     element->name = copyString("VID");
     element->type = MMS_UNSIGNED;
     element->typeSpec.unsignedInteger = 16;
     namedVariable->typeSpec.structure.elements[2] = element;
 
-    element = calloc(1, sizeof(MmsTypeSpecification));
+    element = (MmsTypeSpecification*) calloc(1, sizeof(MmsTypeSpecification));
     element->name = copyString("APPID");
     element->type = MMS_UNSIGNED;
     element->typeSpec.unsignedInteger = 16;
@@ -73,7 +84,7 @@ MmsMapping_createPhyComAddrStructure(MmsTypeSpecification* namedVariable)
 static MmsTypeSpecification*
 createNamedVariableFromDataAttribute(DataAttribute* attribute)
 {
-    MmsTypeSpecification* origNamedVariable = calloc(1,
+    MmsTypeSpecification* origNamedVariable = (MmsTypeSpecification*) calloc(1,
             sizeof(MmsTypeSpecification));
     origNamedVariable->name = copyString(attribute->name);
 
@@ -82,7 +93,7 @@ createNamedVariableFromDataAttribute(DataAttribute* attribute)
     if (attribute->elementCount > 0) {
         namedVariable->type = MMS_ARRAY;
         namedVariable->typeSpec.array.elementCount = attribute->elementCount;
-        namedVariable->typeSpec.array.elementTypeSpec = calloc(1,
+        namedVariable->typeSpec.array.elementTypeSpec = (MmsTypeSpecification*) calloc(1,
                 sizeof(MmsTypeSpecification));
         namedVariable = namedVariable->typeSpec.array.elementTypeSpec;
     }
@@ -92,7 +103,7 @@ createNamedVariableFromDataAttribute(DataAttribute* attribute)
 
         int componentCount = ModelNode_getChildCount((ModelNode*) attribute);
 
-        namedVariable->typeSpec.structure.elements = calloc(componentCount,
+        namedVariable->typeSpec.structure.elements = (MmsTypeSpecification**) calloc(componentCount,
                 sizeof(MmsTypeSpecification*));
 
         DataAttribute* subDataAttribute = (DataAttribute*) attribute->firstChild;
@@ -255,7 +266,7 @@ static MmsTypeSpecification*
 createFCNamedVariableFromDataObject(DataObject* dataObject,
         FunctionalConstraint fc)
 {
-    MmsTypeSpecification* namedVariable = calloc(1,
+    MmsTypeSpecification* namedVariable = (MmsTypeSpecification*) calloc(1,
             sizeof(MmsTypeSpecification));
     namedVariable->name = copyString(dataObject->name);
     namedVariable->type = MMS_STRUCTURE;
@@ -263,7 +274,7 @@ createFCNamedVariableFromDataObject(DataObject* dataObject,
     int elementCount = countChildrenWithFc(dataObject, fc);
 
     /* Allocate memory for components */
-    namedVariable->typeSpec.structure.elements = calloc(elementCount,
+    namedVariable->typeSpec.structure.elements = (MmsTypeSpecification**) calloc(elementCount,
             sizeof(MmsTypeSpecification*));
 
     int i = 0;
@@ -299,7 +310,7 @@ createFCNamedVariableFromDataObject(DataObject* dataObject,
 static MmsTypeSpecification*
 createFCNamedVariable(LogicalNode* logicalNode, FunctionalConstraint fc)
 {
-    MmsTypeSpecification* namedVariable = calloc(1,
+    MmsTypeSpecification* namedVariable = (MmsTypeSpecification*) calloc(1,
             sizeof(MmsTypeSpecification));
     namedVariable->name = copyString(FunctionalConstrained_toString(fc));
     namedVariable->type = MMS_STRUCTURE;
@@ -316,7 +327,7 @@ createFCNamedVariable(LogicalNode* logicalNode, FunctionalConstraint fc)
     }
 
     namedVariable->typeSpec.structure.elementCount = dataObjectCount;
-    namedVariable->typeSpec.structure.elements = calloc(dataObjectCount,
+    namedVariable->typeSpec.structure.elements = (MmsTypeSpecification**) calloc(dataObjectCount,
             sizeof(MmsTypeSpecification*));
 
     dataObjectCount = 0;
@@ -436,7 +447,7 @@ static MmsTypeSpecification*
 createNamedVariableFromLogicalNode(MmsMapping* self, MmsDomain* domain,
         LogicalNode* logicalNode)
 {
-    MmsTypeSpecification* namedVariable = malloc(sizeof(MmsTypeSpecification));
+    MmsTypeSpecification* namedVariable = (MmsTypeSpecification*) malloc(sizeof(MmsTypeSpecification));
 
     namedVariable->name = copyString(logicalNode->name);
 
@@ -474,7 +485,7 @@ createNamedVariableFromLogicalNode(MmsMapping* self, MmsDomain* domain,
 
 #endif
 
-    namedVariable->typeSpec.structure.elements = calloc(componentCount,
+    namedVariable->typeSpec.structure.elements = (MmsTypeSpecification**) calloc(componentCount,
             sizeof(MmsTypeSpecification*));
 
     /* Create a named variable of type structure for each functional constrained */
@@ -595,7 +606,7 @@ createMmsDomainFromIedDevice(MmsMapping* self, LogicalDevice* logicalDevice)
 
     /* Logical nodes are first level named variables */
     domain->namedVariablesCount = nodesCount;
-    domain->namedVariables = malloc(nodesCount * sizeof(MmsTypeSpecification*));
+    domain->namedVariables = (MmsTypeSpecification**) malloc(nodesCount * sizeof(MmsTypeSpecification*));
 
     LogicalNode* logicalNode = logicalDevice->firstChild;
 
@@ -615,7 +626,7 @@ static void
 createMmsDataModel(MmsMapping* self, int iedDeviceCount,
         MmsDevice* mmsDevice, IedModel* iedModel)
 {
-    mmsDevice->domains = malloc((iedDeviceCount) * sizeof(MmsDomain*));
+    mmsDevice->domains = (MmsDomain**) malloc((iedDeviceCount) * sizeof(MmsDomain*));
     mmsDevice->domainCount = iedDeviceCount;
 
     LogicalDevice* logicalDevice = iedModel->firstChild;
@@ -690,7 +701,7 @@ createMmsModelFromIedModel(MmsMapping* self, IedModel* iedModel)
 MmsMapping*
 MmsMapping_create(IedModel* model)
 {
-    MmsMapping* self = calloc(1, sizeof(struct sMmsMapping));
+    MmsMapping* self = (MmsMapping*) calloc(1, sizeof(struct sMmsMapping));
 
     self->model = model;
 
@@ -720,12 +731,12 @@ MmsMapping_destroy(MmsMapping* self)
     if (self->mmsDevice != NULL )
         MmsDevice_destroy(self->mmsDevice);
 
-    LinkedList_destroyDeep(self->reportControls, ReportControl_destroy);
+    LinkedList_destroyDeep(self->reportControls, (void (__cdecl *)(void*)) ReportControl_destroy);
 
     if (CONFIG_INCLUDE_GOOSE_SUPPORT)
-        LinkedList_destroyDeep(self->gseControls, MmsGooseControlBlock_destroy);
+        LinkedList_destroyDeep(self->gseControls, (void (__cdecl *)(void*)) MmsGooseControlBlock_destroy);
 
-    LinkedList_destroyDeep(self->controlObjects, ControlObject_destroy);
+    LinkedList_destroyDeep(self->controlObjects, (void (__cdecl *)(void*)) ControlObject_destroy);
 
     LinkedList_destroy(self->observedObjects);
 
@@ -899,13 +910,13 @@ checkIfValueBelongsToModelNode(DataAttribute* dataAttribute, MmsValue* value)
 {
     if (dataAttribute->mmsValue == value) return true;
 
-    DataAttribute* child = dataAttribute->firstChild;
+    DataAttribute* child = (DataAttribute*) dataAttribute->firstChild;
 
     while (child != NULL) {
         if (checkIfValueBelongsToModelNode(child, value))
             return true;
         else
-            child = child->sibling;
+            child = (DataAttribute*) child->sibling;
     }
 
     if (MmsValue_getType(value) == MMS_STRUCTURE) {
@@ -1008,10 +1019,10 @@ void
 MmsMapping_addObservedAttribute(MmsMapping* self, DataAttribute* dataAttribute,
         void* handler)
 {
-    AttributeObserver* observer = malloc(sizeof(struct sAttributeObserver));
+    AttributeObserver* observer = (AttributeObserver*) malloc(sizeof(struct sAttributeObserver));
 
     observer->attribute = dataAttribute;
-    observer->handler = handler;
+    observer->handler = (void (__cdecl *)(DataAttribute *))handler;
 
     LinkedList_add(self->observedObjects, observer);
 }
@@ -1313,7 +1324,7 @@ MmsMapping_getMmsDomainFromObjectReference(char* objectReference, char* buffer)
     char* domainName;
 
     if (buffer == NULL )
-        domainName = malloc(i + 1);
+        domainName = (char*) malloc(i + 1);
     else
         domainName = buffer;
 
@@ -1354,7 +1365,7 @@ MmsMapping_createMmsVariableNameFromObjectReference(char* objectReference,
     char* mmsVariableName;
 
     if (buffer == NULL )
-        mmsVariableName = malloc(objRefLength - i + 4);
+        mmsVariableName = (char*) malloc(objRefLength - i + 4);
     else
         mmsVariableName = buffer;
 
@@ -1432,7 +1443,7 @@ MmsMapping_startEventWorkerThread(MmsMapping* self)
 {
     self->reportThreadRunning = true;
 
-    Thread thread = Thread_create(eventWorkerThread, self, false);
+    Thread thread = Thread_create((ThreadExecutionFunction) eventWorkerThread, self, false);
     self->reportWorkerThread = thread;
     Thread_start(thread);
 }

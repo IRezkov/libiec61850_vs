@@ -6,7 +6,7 @@
 	ProjectGUID="{85B88F65-A2D6-4287-BBCD-28E106047199}"
 	RootNamespace="example1__"
 	Keyword="Win32Proj"
-	AssemblyReferenceSearchPaths="&quot;.\iec_src\iedserver&quot;"
+	AssemblyReferenceSearchPaths="&quot;..\..\..\src\iedserver&quot;"
 	>
 	<Platforms>
 		<Platform
@@ -21,7 +21,6 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			UseOfMFC="1"
 			CharacterSet="1"
 			>
 			<Tool
@@ -41,7 +40,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/I iec_src\mms\iso_mms\common &#x0D;&#x0A;/I iec_src\iedserver &#x0D;&#x0A;/I iec_src\mms\iso_mms\server &#x0D;&#x0A;/I iec_src\common &#x0D;&#x0A;/I iec_src\hal &#x0D;&#x0A;/I iec_src\mms\asn1 &#x0D;&#x0A;/I iec_src\mms\iso_server &#x0D;&#x0A;/I WpdPack\Include&#x0D;&#x0A;/I iec_src\hal\socket &#x0D;&#x0A;/I iec_src\mms\iso_acse&#x0D;&#x0A;/I inc&#x0D;&#x0A;/I iec_src\iedserver\model&#x0D;&#x0A;/I iec_src\iedcommon&#x0D;&#x0A;/I iec_src\hal\thread&#x0D;&#x0A;/I .\&#x0D;&#x0A;/I iec_src\iedserver\mms_mapping&#x0D;&#x0A;/I iec_src\goose&#x0D;&#x0A;/I iec_src\mms\iso_mms\asn1c&#x0D;&#x0A;/I iec_src\hal\ethernet&#x0D;&#x0A;/I iec_src\mms\iso_cotp&#x0D;&#x0A;/I iec_src\mms\iso_session&#x0D;&#x0A;/I iec_src\mms\iso_presentation"
+				AdditionalOptions="/I ..\..\..\src\mms\iso_mms\common &#x0D;&#x0A;/I ..\..\..\src\iedserver &#x0D;&#x0A;/I ..\..\..\src\mms\iso_mms\server &#x0D;&#x0A;/I ..\..\..\src\common &#x0D;&#x0A;/I ..\..\..\src\hal &#x0D;&#x0A;/I ..\..\..\src\mms\asn1 &#x0D;&#x0A;/I ..\..\..\src\mms\iso_server &#x0D;&#x0A;/I ..\..\..\third_party\winpcap\Include&#x0D;&#x0A;/I ..\..\..\src\hal\socket &#x0D;&#x0A;/I ..\..\..\src\mms\iso_acse&#x0D;&#x0A;/I ..\..\..\inc&#x0D;&#x0A;/I ..\..\..\src\iedserver\model&#x0D;&#x0A;/I ..\..\..\src\iedcommon&#x0D;&#x0A;/I ..\..\..\src\hal\thread&#x0D;&#x0A;/I .\&#x0D;&#x0A;/I ..\..\..\src\iedserver\mms_mapping&#x0D;&#x0A;/I ..\..\..\src\goose&#x0D;&#x0A;/I ..\..\..\src\mms\iso_mms\asn1c&#x0D;&#x0A;/I ..\..\..\src\hal\ethernet&#x0D;&#x0A;/I ..\..\..\src\mms\iso_cotp&#x0D;&#x0A;/I ..\..\..\src\mms\iso_session&#x0D;&#x0A;/I ..\..\..\src\mms\iso_presentation&#x0D;&#x0A;/I ..\..\..\src\mms\iso_mms\client&#x0D;&#x0A;/I ..\..\..\src\mms\iso_client"
 				Optimization="0"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				IgnoreStandardIncludePath="false"
@@ -69,9 +68,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WpdPack\Lib\wpcap.lib"
+				AdditionalDependencies="..\..\..\third_party\winpcap\Lib\wpcap.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="C:\MMS\example1__\example1__\iec_src"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -127,7 +125,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/I iec_src\mms\iso_mms\common &#x0D;&#x0A;/I iec_src\iedserver &#x0D;&#x0A;/I iec_src\mms\iso_mms\server &#x0D;&#x0A;/I iec_src\common &#x0D;&#x0A;/I iec_src\hal &#x0D;&#x0A;/I iec_src\mms\asn1 &#x0D;&#x0A;/I iec_src\mms\iso_server &#x0D;&#x0A;/I WpdPack\Include&#x0D;&#x0A;/I iec_src\hal\socket &#x0D;&#x0A;/I iec_src\mms\iso_acse&#x0D;&#x0A;/I inc&#x0D;&#x0A;/I iec_src\iedserver\model&#x0D;&#x0A;/I iec_src\iedcommon&#x0D;&#x0A;/I iec_src\hal\thread&#x0D;&#x0A;/I .\&#x0D;&#x0A;/I iec_src\iedserver\mms_mapping&#x0D;&#x0A;/I iec_src\goose&#x0D;&#x0A;/I iec_src\mms\iso_mms\asn1c&#x0D;&#x0A;/I iec_src\hal\ethernet&#x0D;&#x0A;/I iec_src\mms\iso_cotp&#x0D;&#x0A;/I iec_src\mms\iso_session&#x0D;&#x0A;/I iec_src\mms\iso_presentation"
+				AdditionalOptions="/I ..\..\..\src\mms\iso_mms\common &#x0D;&#x0A;/I ..\..\..\src\iedserver &#x0D;&#x0A;/I ..\..\..\src\mms\iso_mms\server &#x0D;&#x0A;/I ..\..\..\src\common &#x0D;&#x0A;/I ..\..\..\src\hal &#x0D;&#x0A;/I ..\..\..\src\mms\asn1 &#x0D;&#x0A;/I ..\..\..\src\mms\iso_server &#x0D;&#x0A;/I ..\..\..\third_party\winpcap\Include&#x0D;&#x0A;/I ..\..\..\src\hal\socket &#x0D;&#x0A;/I ..\..\..\src\mms\iso_acse&#x0D;&#x0A;/I ..\..\..\inc&#x0D;&#x0A;/I ..\..\..\src\iedserver\model&#x0D;&#x0A;/I ..\..\..\src\iedcommon&#x0D;&#x0A;/I ..\..\..\src\hal\thread&#x0D;&#x0A;/I .\&#x0D;&#x0A;/I ..\..\..\src\iedserver\mms_mapping&#x0D;&#x0A;/I ..\..\..\src\goose&#x0D;&#x0A;/I ..\..\..\src\mms\iso_mms\asn1c&#x0D;&#x0A;/I ..\..\..\src\hal\ethernet&#x0D;&#x0A;/I ..\..\..\src\mms\iso_cotp&#x0D;&#x0A;/I ..\..\..\src\mms\iso_session&#x0D;&#x0A;/I ..\..\..\src\mms\iso_presentation&#x0D;&#x0A;/I ..\..\..\src\mms\iso_mms\client&#x0D;&#x0A;/I ..\..\..\src\mms\iso_client"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE"
@@ -149,7 +147,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="WpdPack\Lib\wpcap.lib"
+				AdditionalDependencies="..\..\..\third_party\winpcap\Lib\wpcap.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -198,383 +196,383 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\AccessResult.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\AccessResult.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_acse\acse.h"
+				RelativePath="..\..\..\src\mms\iso_acse\acse.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\Address.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\Address.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\alternateaccess.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\alternateaccess.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\AlternateAccessSelection.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\AlternateAccessSelection.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\asn1\asn1_ber_primitive_value.h"
+				RelativePath="..\..\..\src\mms\asn1\asn1_ber_primitive_value.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\asn_application.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\asn_application.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\asn_codecs.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\asn_codecs.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\asn_codecs_prim.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\asn_codecs_prim.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\asn_internal.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\asn_internal.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\asn_SEQUENCE_OF.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\asn_SEQUENCE_OF.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\asn_SET_OF.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\asn_SET_OF.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\asn_system.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\asn_system.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\asn1\ber_decode.h"
+				RelativePath="..\..\..\src\mms\asn1\ber_decode.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ber_decoder.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ber_decoder.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\asn1\ber_encoder.h"
+				RelativePath="..\..\..\src\mms\asn1\ber_encoder.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\asn1\ber_integer.h"
+				RelativePath="..\..\..\src\mms\asn1\ber_integer.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ber_tlv_length.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ber_tlv_length.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ber_tlv_tag.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ber_tlv_tag.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\BIT_STRING.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\BIT_STRING.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\BOOLEAN.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\BOOLEAN.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\common\byte_buffer.h"
+				RelativePath="..\..\..\src\common\byte_buffer.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\hal\byte_stream.h"
+				RelativePath="..\..\..\src\hal\byte_stream.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ConcludeRequestPDU.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ConcludeRequestPDU.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ConcludeResponsePDU.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ConcludeResponsePDU.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ConfirmedErrorPDU.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ConfirmedErrorPDU.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ConfirmedRequestPdu.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ConfirmedRequestPdu.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ConfirmedResponsePdu.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ConfirmedResponsePdu.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ConfirmedServiceRequest.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ConfirmedServiceRequest.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ConfirmedServiceResponse.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ConfirmedServiceResponse.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\constr_CHOICE.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\constr_CHOICE.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\constr_SEQUENCE.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\constr_SEQUENCE.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\constr_SEQUENCE_OF.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\constr_SEQUENCE_OF.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\constr_SET_OF.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\constr_SET_OF.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\constr_TYPE.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\constr_TYPE.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\constraints.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\constraints.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\iedserver\mms_mapping\control.H"
+				RelativePath="..\..\..\src\iedserver\mms_mapping\control.H"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_cotp\cotp.h"
+				RelativePath="..\..\..\src\mms\iso_cotp\cotp.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\Data.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\Data.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\DataAccessError.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\DataAccessError.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\DataSequence.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\DataSequence.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\definenamedvariablelistrequest.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\definenamedvariablelistrequest.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\DefineNamedVariableListResponse.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\DefineNamedVariableListResponse.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\DeleteNamedVariableListRequest.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\DeleteNamedVariableListRequest.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\DeleteNamedVariableListResponse.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\DeleteNamedVariableListResponse.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\der_encoder.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\der_encoder.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\hal\ethernet\ethernet.h"
+				RelativePath="..\..\..\src\hal\ethernet\ethernet.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\FloatingPoint.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\FloatingPoint.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\GeneralizedTime.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\GeneralizedTime.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\GetNamedVariableListAttributesRequest.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\GetNamedVariableListAttributesRequest.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\getnamedvariablelistattributesresponse.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\getnamedvariablelistattributesresponse.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\GetNameListRequest.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\GetNameListRequest.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\GetNameListResponse.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\GetNameListResponse.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\GetVariableAccessAttributesRequest.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\GetVariableAccessAttributesRequest.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\GetVariableAccessAttributesResponse.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\GetVariableAccessAttributesResponse.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\goose\goose_publisher.h"
+				RelativePath="..\..\..\src\goose\goose_publisher.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\hal\hal.h"
+				RelativePath="..\..\..\src\hal\hal.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\Identifier.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\Identifier.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\iedcommon\iec61850_common.h"
+				RelativePath="..\..\..\src\iedcommon\iec61850_common.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\iedserver\iec61850_server.h"
+				RelativePath="..\..\..\src\iedserver\iec61850_server.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\IndexRangeSeq.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\IndexRangeSeq.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\InformationReport.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\InformationReport.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\InitiateErrorPdu.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\InitiateErrorPdu.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\InitiateRequestPdu.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\InitiateRequestPdu.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\InitiateResponsePdu.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\InitiateResponsePdu.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\InitRequestDetail.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\InitRequestDetail.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\InitResponseDetail.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\InitResponseDetail.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\INTEGER.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\INTEGER.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\Integer16.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\Integer16.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\Integer32.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\Integer32.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\Integer8.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\Integer8.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_presentation\iso_presentation.h"
+				RelativePath="..\..\..\src\mms\iso_presentation\iso_presentation.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_server\iso_server.h"
+				RelativePath="..\..\..\src\mms\iso_server\iso_server.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_session\iso_session.h"
+				RelativePath="..\..\..\src\mms\iso_session\iso_session.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\common\linked_list.h"
+				RelativePath="..\..\..\src\common\linked_list.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ListOfVariableSeq.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ListOfVariableSeq.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\common\map.h"
+				RelativePath="..\..\..\src\common\map.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\server\mms_access_result.h"
+				RelativePath="..\..\..\src\mms\iso_mms\server\mms_access_result.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\iedserver\mms_mapping\mms_goose.H"
+				RelativePath="..\..\..\src\iedserver\mms_mapping\mms_goose.H"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\iedserver\mms_mapping\mms_mapping.h"
+				RelativePath="..\..\..\src\iedserver\mms_mapping\mms_mapping.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\server\mms_named_variable_list.h"
+				RelativePath="..\..\..\src\mms\iso_mms\server\mms_named_variable_list.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\server\mms_server.h"
+				RelativePath="..\..\..\src\mms\iso_mms\server\mms_server.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\server\mms_server_connection.h"
+				RelativePath="..\..\..\src\mms\iso_mms\server\mms_server_connection.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\common\mms_type_spec.h"
+				RelativePath="..\..\..\src\mms\iso_mms\common\mms_type_spec.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\common\mms_value.h"
+				RelativePath="..\..\..\src\mms\iso_mms\common\mms_value.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\server\mms_value_cache.h"
+				RelativePath="..\..\..\src\mms\iso_mms\server\mms_value_cache.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\MmsPdu.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\MmsPdu.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\MMSString.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\MMSString.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\NativeEnumerated.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\NativeEnumerated.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\NativeInteger.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\NativeInteger.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\NULL.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\NULL.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ObjectClass.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ObjectClass.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ObjectName.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ObjectName.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\OCTET_STRING.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\OCTET_STRING.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ParameterSupportOptions.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ParameterSupportOptions.h"
 				>
 			</File>
 			<File
@@ -582,47 +580,47 @@
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\per_decoder.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\per_decoder.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\per_encoder.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\per_encoder.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\per_support.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\per_support.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ReadRequest.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ReadRequest.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ReadResponse.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ReadResponse.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\RejectPDU.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\RejectPDU.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\iedserver\mms_mapping\reporting.h"
+				RelativePath="..\..\..\src\iedserver\mms_mapping\reporting.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\scatteredaccessdescription.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\scatteredaccessdescription.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ServiceError.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ServiceError.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ServiceSupportOptions.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ServiceSupportOptions.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\hal\socket\socket.h"
+				RelativePath="..\..\..\src\hal\socket\socket.h"
 				>
 			</File>
 			<File
@@ -630,79 +628,79 @@
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\common\string_map.h"
+				RelativePath="..\..\..\src\common\string_map.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\StructComponent.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\StructComponent.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\TimeOfDay.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\TimeOfDay.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\TypeSpecification.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\TypeSpecification.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\UnconfirmedPDU.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\UnconfirmedPDU.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\UnconfirmedService.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\UnconfirmedService.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\Unsigned16.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\Unsigned16.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\Unsigned32.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\Unsigned32.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\Unsigned8.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\Unsigned8.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\UtcTime.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\UtcTime.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\UTF8String.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\UTF8String.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\VariableAccessSpecification.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\VariableAccessSpecification.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\VariableSpecification.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\VariableSpecification.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\VisibleString.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\VisibleString.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\WriteRequest.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\WriteRequest.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\writeresponse.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\writeresponse.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\xer_decoder.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\xer_decoder.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\xer_encoder.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\xer_encoder.h"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\xer_support.h"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\xer_support.h"
 				>
 			</File>
 		</Filter>
@@ -716,307 +714,307 @@
 			Name="compiled"
 			>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\AccessResult.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\AccessResult.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_acse\acse.cpp"
+				RelativePath="..\..\..\src\mms\iso_acse\acse.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\Address.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\Address.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\AlternateAccess.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\AlternateAccess.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\AlternateAccessSelection.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\AlternateAccessSelection.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\asn1\asn1_ber_primitive_value.cpp"
+				RelativePath="..\..\..\src\mms\asn1\asn1_ber_primitive_value.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\asn_codecs_prim.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\asn_codecs_prim.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\asn_SEQUENCE_OF.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\asn_SEQUENCE_OF.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\asn_SET_OF.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\asn_SET_OF.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\asn1\ber_decode.cpp"
+				RelativePath="..\..\..\src\mms\asn1\ber_decode.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ber_decoder.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ber_decoder.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\asn1\ber_encoder.cpp"
+				RelativePath="..\..\..\src\mms\asn1\ber_encoder.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\asn1\ber_integer.cpp"
+				RelativePath="..\..\..\src\mms\asn1\ber_integer.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ber_tlv_length.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ber_tlv_length.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ber_tlv_tag.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ber_tlv_tag.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\BIT_STRING.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\BIT_STRING.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\BOOLEAN.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\BOOLEAN.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\common\byte_buffer.cpp"
+				RelativePath="..\..\..\src\common\byte_buffer.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\hal\byte_stream.cpp"
+				RelativePath="..\..\..\src\hal\byte_stream.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ConcludeRequestPDU.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ConcludeRequestPDU.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ConcludeResponsePDU.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ConcludeResponsePDU.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ConfirmedErrorPDU.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ConfirmedErrorPDU.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ConfirmedRequestPdu.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ConfirmedRequestPdu.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ConfirmedResponsePdu.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ConfirmedResponsePdu.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ConfirmedServiceRequest.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ConfirmedServiceRequest.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ConfirmedServiceResponse.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ConfirmedServiceResponse.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\constr_CHOICE.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\constr_CHOICE.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\constr_SEQUENCE.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\constr_SEQUENCE.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\constr_SEQUENCE_OF.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\constr_SEQUENCE_OF.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\constr_SET_OF.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\constr_SET_OF.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\constr_TYPE.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\constr_TYPE.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\constraints.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\constraints.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\iedserver\mms_mapping\control.cpp"
+				RelativePath="..\..\..\src\iedserver\mms_mapping\control.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_cotp\cotp.cpp"
+				RelativePath="..\..\..\src\mms\iso_cotp\cotp.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\Data.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\Data.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\DataAccessError.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\DataAccessError.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\DataSequence.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\DataSequence.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\DefineNamedVariableListRequest.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\DefineNamedVariableListRequest.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\DefineNamedVariableListResponse.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\DefineNamedVariableListResponse.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\DeleteNamedVariableListRequest.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\DeleteNamedVariableListRequest.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\DeleteNamedVariableListResponse.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\DeleteNamedVariableListResponse.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\der_encoder.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\der_encoder.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\hal\ethernet\win32\ethernet_win32.cpp"
+				RelativePath="..\..\..\src\hal\ethernet\win32\ethernet_win32.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\FloatingPoint.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\FloatingPoint.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\GeneralizedTime.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\GeneralizedTime.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\GetNamedVariableListAttributesRequest.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\GetNamedVariableListAttributesRequest.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\GetNamedVariableListAttributesResponse.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\GetNamedVariableListAttributesResponse.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\GetNameListRequest.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\GetNameListRequest.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\GetNameListResponse.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\GetNameListResponse.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\GetVariableAccessAttributesRequest.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\GetVariableAccessAttributesRequest.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\GetVariableAccessAttributesResponse.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\GetVariableAccessAttributesResponse.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\goose\goose_publisher.cpp"
+				RelativePath="..\..\..\src\goose\goose_publisher.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\hal\hal.cpp"
+				RelativePath="..\..\..\src\hal\hal.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\Identifier.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\Identifier.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\iedcommon\iec61850_common.cpp"
+				RelativePath="..\..\..\src\iedcommon\iec61850_common.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\iedserver\ied_server.cpp"
+				RelativePath="..\..\..\src\iedserver\ied_server.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\IndexRangeSeq.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\IndexRangeSeq.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\InformationReport.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\InformationReport.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\InitiateErrorPdu.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\InitiateErrorPdu.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\InitiateRequestPdu.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\InitiateRequestPdu.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\InitiateResponsePdu.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\InitiateResponsePdu.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\InitRequestDetail.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\InitRequestDetail.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\InitResponseDetail.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\InitResponseDetail.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\INTEGER.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\INTEGER.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\Integer16.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\Integer16.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\Integer32.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\Integer32.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\Integer8.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\Integer8.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_server\iso_connection.cpp"
+				RelativePath="..\..\..\src\mms\iso_server\iso_connection.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_presentation\iso_presentation.cpp"
+				RelativePath="..\..\..\src\mms\iso_presentation\iso_presentation.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_server\iso_server.cpp"
+				RelativePath="..\..\..\src\mms\iso_server\iso_server.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_session\iso_session.cpp"
+				RelativePath="..\..\..\src\mms\iso_session\iso_session.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\common\linked_list.cpp"
+				RelativePath="..\..\..\src\common\linked_list.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ListOfVariableSeq.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ListOfVariableSeq.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\common\map.cpp"
+				RelativePath="..\..\..\src\common\map.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\server\mms_access_result.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\server\mms_access_result.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\common\mms_common_msg.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\common\mms_common_msg.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -1028,159 +1026,159 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\server\mms_conclude_service.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\server\mms_conclude_service.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\common\mms_device.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\common\mms_device.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\server\mms_domain.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\server\mms_domain.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\server\mms_get_namelist_service.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\server\mms_get_namelist_service.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\server\mms_get_var_access_service.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\server\mms_get_var_access_service.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\iedserver\mms_mapping\mms_goose.cpp"
+				RelativePath="..\..\..\src\iedserver\mms_mapping\mms_goose.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\server\mms_information_report.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\server\mms_information_report.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\iedserver\mms_mapping\mms_mapping.cpp"
+				RelativePath="..\..\..\src\iedserver\mms_mapping\mms_mapping.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\server\mms_named_variable_list.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\server\mms_named_variable_list.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\server\mms_named_variable_list_service.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\server\mms_named_variable_list_service.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\server\mms_read_service.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\server\mms_read_service.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\server\mms_server.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\server\mms_server.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\server\mms_server_common.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\server\mms_server_common.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\server\mms_server_connection.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\server\mms_server_connection.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\common\mms_type_spec.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\common\mms_type_spec.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\common\mms_value.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\common\mms_value.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\server\mms_value_cache.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\server\mms_value_cache.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\server\mms_write_service.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\server\mms_write_service.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\MmsPdu.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\MmsPdu.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\MMSString.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\MMSString.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\iedserver\model\model.cpp"
+				RelativePath="..\..\..\src\iedserver\model\model.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\NativeEnumerated.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\NativeEnumerated.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\NativeInteger.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\NativeInteger.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\NULL.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\NULL.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ObjectClass.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ObjectClass.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ObjectName.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ObjectName.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\OCTET_STRING.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\OCTET_STRING.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ParameterSupportOptions.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ParameterSupportOptions.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\per_decoder.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\per_decoder.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\per_encoder.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\per_encoder.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\per_support.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\per_support.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ReadRequest.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ReadRequest.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ReadResponse.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ReadResponse.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\RejectPDU.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\RejectPDU.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\iedserver\mms_mapping\reporting.cpp"
+				RelativePath="..\..\..\src\iedserver\mms_mapping\reporting.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ScatteredAccessDescription.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ScatteredAccessDescription.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ServiceError.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ServiceError.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\ServiceSupportOptions.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\ServiceSupportOptions.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\hal\socket\win32\socket_win32.cpp"
+				RelativePath="..\..\..\src\hal\socket\win32\socket_win32.cpp"
 				>
 			</File>
 			<File
@@ -1196,87 +1194,87 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\iec_src\common\string_map.cpp"
+				RelativePath="..\..\..\src\common\string_map.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\common\string_utilities.cpp"
+				RelativePath="..\..\..\src\common\string_utilities.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\StructComponent.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\StructComponent.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\hal\thread\win32\thread_win32.cpp"
+				RelativePath="..\..\..\src\hal\thread\win32\thread_win32.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\TimeOfDay.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\TimeOfDay.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\TypeSpecification.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\TypeSpecification.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\UnconfirmedPDU.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\UnconfirmedPDU.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\UnconfirmedService.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\UnconfirmedService.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\Unsigned16.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\Unsigned16.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\Unsigned32.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\Unsigned32.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\Unsigned8.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\Unsigned8.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\UtcTime.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\UtcTime.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\UTF8String.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\UTF8String.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\VariableAccessSpecification.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\VariableAccessSpecification.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\VariableSpecification.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\VariableSpecification.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\VisibleString.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\VisibleString.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\WriteRequest.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\WriteRequest.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\WriteResponse.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\WriteResponse.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\xer_decoder.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\xer_decoder.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\xer_encoder.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\xer_encoder.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\iec_src\mms\iso_mms\asn1c\xer_support.cpp"
+				RelativePath="..\..\..\src\mms\iso_mms\asn1c\xer_support.cpp"
 				>
 			</File>
 		</Filter>

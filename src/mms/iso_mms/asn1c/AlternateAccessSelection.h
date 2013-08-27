@@ -46,52 +46,68 @@ typedef enum AlternateAccessSelection__selectAccess_PR {
 /* Forward declarations */
 struct AlternateAccess;
 
+struct AlternateAccessSelection__selectAlternateAccess__accessSelection__indexRange {
+	Unsigned32_t	 lowIndex;
+	Unsigned32_t	 numberOfElements;
+
+	/* Context for parsing across buffer boundaries */
+	asn_struct_ctx_t _asn_ctx;
+};
+
+struct AlternateAccessSelection__selectAlternateAccess__accessSelection 
+{
+	AlternateAccessSelection__selectAlternateAccess__accessSelection_PR present;
+	union AlternateAccessSelection__selectAlternateAccess__accessSelection_u 
+	{
+		Identifier_t	 component;
+		Unsigned32_t	 index;
+		struct AlternateAccessSelection__selectAlternateAccess__accessSelection__indexRange indexRange;
+		NULL_t	 allElements;
+	} choice;
+
+	/* Context for parsing across buffer boundaries */
+	asn_struct_ctx_t _asn_ctx;
+};
+
+struct AlternateAccessSelection__selectAlternateAccess 
+{
+	struct AlternateAccessSelection__selectAlternateAccess__accessSelection accessSelection;
+	struct AlternateAccess	*alternateAccess;
+
+	/* Context for parsing across buffer boundaries */
+	asn_struct_ctx_t _asn_ctx;
+};
+
+struct AlternateAccessSelection__selectAccess__indexRange 
+{
+	Unsigned32_t	 lowIndex;
+	Unsigned32_t	 numberOfElements;
+
+	/* Context for parsing across buffer boundaries */
+	asn_struct_ctx_t _asn_ctx;
+};
+
+struct AlternateAccessSelection__selectAccess 
+{
+	AlternateAccessSelection__selectAccess_PR present;
+	union AlternateAccessSelection__selectAccess_u 
+	{
+		Identifier_t	 component;
+		Unsigned32_t	 index;
+		struct AlternateAccessSelection__selectAccess__indexRange indexRange;
+		NULL_t	 allElements;
+	} choice;
+
+	/* Context for parsing across buffer boundaries */
+	asn_struct_ctx_t _asn_ctx;
+};
+
 /* AlternateAccessSelection */
 typedef struct AlternateAccessSelection {
 	AlternateAccessSelection_PR present;
 	union AlternateAccessSelection_u {
-		struct AlternateAccessSelection__selectAlternateAccess {
-			struct AlternateAccessSelection__selectAlternateAccess__accessSelection {
-				AlternateAccessSelection__selectAlternateAccess__accessSelection_PR present;
-				union AlternateAccessSelection__selectAlternateAccess__accessSelection_u {
-					Identifier_t	 component;
-					Unsigned32_t	 index;
-					struct AlternateAccessSelection__selectAlternateAccess__accessSelection__indexRange {
-						Unsigned32_t	 lowIndex;
-						Unsigned32_t	 numberOfElements;
-						
-						/* Context for parsing across buffer boundaries */
-						asn_struct_ctx_t _asn_ctx;
-					} indexRange;
-					NULL_t	 allElements;
-				} choice;
-				
-				/* Context for parsing across buffer boundaries */
-				asn_struct_ctx_t _asn_ctx;
-			} accessSelection;
-			struct AlternateAccess	*alternateAccess;
-			
-			/* Context for parsing across buffer boundaries */
-			asn_struct_ctx_t _asn_ctx;
-		} selectAlternateAccess;
-		struct AlternateAccessSelection__selectAccess {
-			AlternateAccessSelection__selectAccess_PR present;
-			union AlternateAccessSelection__selectAccess_u {
-				Identifier_t	 component;
-				Unsigned32_t	 index;
-				struct AlternateAccessSelection__selectAccess__indexRange {
-					Unsigned32_t	 lowIndex;
-					Unsigned32_t	 numberOfElements;
-					
-					/* Context for parsing across buffer boundaries */
-					asn_struct_ctx_t _asn_ctx;
-				} indexRange;
-				NULL_t	 allElements;
-			} choice;
-			
-			/* Context for parsing across buffer boundaries */
-			asn_struct_ctx_t _asn_ctx;
-		} selectAccess;
+		struct AlternateAccessSelection__selectAlternateAccess selectAlternateAccess;
+		struct AlternateAccessSelection__selectAccess selectAccess;
 	} choice;
 	
 	/* Context for parsing across buffer boundaries */

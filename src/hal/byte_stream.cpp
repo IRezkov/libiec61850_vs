@@ -32,7 +32,7 @@
 ByteStream
 ByteStream_create(Socket socket, ByteBuffer* writeBuffer)
 {
-    ByteStream self = calloc(1, sizeof(struct sByteStream));
+    ByteStream self = (ByteStream) calloc(1, sizeof(struct sByteStream));
 
     self->socket = socket;
     self->writeBuffer = writeBuffer;

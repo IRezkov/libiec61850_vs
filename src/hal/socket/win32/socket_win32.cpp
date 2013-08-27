@@ -92,7 +92,7 @@ TcpServerSocket_create(char* address, int port)
 	if (listen_socket == INVALID_SOCKET) {
 		printf("socket failed with error: %i\n", WSAGetLastError());
 		WSACleanup();
-		return 1;
+		return (ServerSocket) 1;
 	}
 
 	int optionReuseAddr = 1;
@@ -104,10 +104,10 @@ TcpServerSocket_create(char* address, int port)
 		printf("bind failed with error:%i\n", WSAGetLastError());
 		closesocket(listen_socket);
 		WSACleanup();
-		return 1;
+		return (ServerSocket) 1;
 	}
 
-	serverSocket = malloc(sizeof(struct sServerSocket));
+	serverSocket = (ServerSocket) malloc(sizeof(struct sServerSocket));
 
 	serverSocket->fd = listen_socket;
 	serverSocket->backLog = 10;
@@ -155,7 +155,7 @@ ServerSocket_destroy(ServerSocket socket)
 Socket
 TcpSocket_create()
 {
-	Socket socket = malloc(sizeof(struct sSocket));
+	Socket socket = (Socket) malloc(sizeof(struct sSocket));
 
 	socket->fd = -1;
 
@@ -200,7 +200,7 @@ Socket_getPeerAddress(Socket self)
 	struct sockaddr_storage addr;
 	int addrLen = sizeof(addr);
 
-	getpeername(self->fd, &addr, &addrLen);
+	getpeername(self->fd, (sockaddr*) &addr, &addrLen);
 
 	char* addrString[INET6_ADDRSTRLEN + 7];
 	int addrStringLen = INET6_ADDRSTRLEN + 7;
@@ -210,18 +210,18 @@ Socket_getPeerAddress(Socket self)
 		struct sockaddr_in* ipv4Addr = (struct sockaddr_in*) &addr;
 		port = ntohs(ipv4Addr->sin_port);
 		ipv4Addr->sin_port = 0;
-		WSAAddressToString(ipv4Addr, sizeof(struct sockaddr_storage), NULL, addrString, &addrStringLen);
+		WSAAddressToString((LPSOCKADDR) ipv4Addr, sizeof(struct sockaddr_storage), NULL, (LPWSTR) addrString, (LPDWORD) &addrStringLen);
 	}
 	else if (addr.ss_family == AF_INET6){
 		struct sockaddr_in6* ipv6Addr = (struct sockaddr_in6*) &addr;
 		port = ntohs(ipv6Addr->sin6_port);
 		ipv6Addr->sin6_port = 0;
-		WSAAddressToString(ipv6Addr, sizeof(struct sockaddr_storage), NULL, addrString, &addrStringLen);
+		WSAAddressToString((LPSOCKADDR) ipv6Addr, sizeof(struct sockaddr_storage), NULL, (LPWSTR) addrString, (LPDWORD) &addrStringLen);
 	}
 	else
 		return NULL;
 
-	char* clientConnection = malloc(strlen(addrString) + 8);
+	char* clientConnection = (char*) malloc(strlen((const char*) addrString) + 8);
 
 	sprintf(clientConnection, "%s[%i]", addrString, port);
 
@@ -231,13 +231,13 @@ Socket_getPeerAddress(Socket self)
 int
 Socket_read(Socket socket, uint8_t* buf, int size)
 {
-	return recv(socket->fd, buf, size, 0);
+	return recv(socket->fd, (char*) buf, size, 0);
 }
 
 int
 Socket_write(Socket socket, uint8_t* buf, int size)
 {
-	return send(socket->fd, buf, size, 0);
+	return send(socket->fd, (const char*) buf, size, 0);
 }
 
 void

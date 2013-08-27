@@ -24,15 +24,19 @@ extern "C" {
 /* Forward declarations */
 struct AccessResult;
 
+struct InformationReport__listOfAccessResult 
+{
+	A_SEQUENCE_OF(struct AccessResult) list;
+
+	/* Context for parsing across buffer boundaries */
+	asn_struct_ctx_t _asn_ctx;
+};
+
 /* InformationReport */
-typedef struct InformationReport {
+typedef struct InformationReport 
+{
 	VariableAccessSpecification_t	 variableAccessSpecification;
-	struct InformationReport__listOfAccessResult {
-		A_SEQUENCE_OF(struct AccessResult) list;
-		
-		/* Context for parsing across buffer boundaries */
-		asn_struct_ctx_t _asn_ctx;
-	} listOfAccessResult;
+	struct InformationReport__listOfAccessResult listOfAccessResult;
 	
 	/* Context for parsing across buffer boundaries */
 	asn_struct_ctx_t _asn_ctx;

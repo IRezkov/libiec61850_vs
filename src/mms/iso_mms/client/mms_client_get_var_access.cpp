@@ -53,7 +53,7 @@
 
 static MmsTypeSpecification*
 createTypeSpecification(TypeSpecification_t* asnTypeSpec) {
-	MmsTypeSpecification* typeSpec = calloc(1, sizeof(MmsTypeSpecification));
+	MmsTypeSpecification* typeSpec = (MmsTypeSpecification*) calloc(1, sizeof(MmsTypeSpecification));
 
 	switch (asnTypeSpec->present) {
 	case TypeSpecification_PR_structure:
@@ -64,7 +64,7 @@ createTypeSpecification(TypeSpecification_t* asnTypeSpec) {
 			typeSpec->typeSpec.structure.elementCount = elementCount;
 
 			typeSpec->typeSpec.structure.elements =
-					calloc(elementCount, sizeof(MmsTypeSpecification*));
+					(MmsTypeSpecification**) calloc(elementCount, sizeof(MmsTypeSpecification*));
 
 			int i;
 
@@ -193,15 +193,15 @@ mmsClient_createGetVariableAccessAttributesRequest(
 
 	request->choice.name.present = ObjectName_PR_domainspecific;
 
-	request->choice.name.choice.domainspecific.domainId.buf = domainId;
+	request->choice.name.choice.domainspecific.domainId.buf = (uint8_t*) domainId;
 	request->choice.name.choice.domainspecific.domainId.size = strlen(domainId);
-	request->choice.name.choice.domainspecific.itemId.buf = itemId;
+	request->choice.name.choice.domainspecific.itemId.buf = (uint8_t*) itemId;
 	request->choice.name.choice.domainspecific.itemId.size = strlen(itemId);
 
 	asn_enc_rval_t rval;
 
 	rval = der_encode(&asn_DEF_MmsPdu, mmsPdu,
-	            mmsClient_write_out, (void*) writeBuffer);
+	           (asn_app_consume_bytes_f (__cdecl *)) mmsClient_write_out, (void*) writeBuffer);
 
 	if (DEBUG) xer_fprint(stdout, &asn_DEF_MmsPdu, mmsPdu);
 

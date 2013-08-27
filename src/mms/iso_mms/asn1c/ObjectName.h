@@ -28,18 +28,23 @@ typedef enum ObjectName_PR {
 	ObjectName_PR_aaspecific
 } ObjectName_PR;
 
+struct ObjectName__domainspecific 
+{
+	Identifier_t	 domainId;
+	Identifier_t	 itemId;
+
+	/* Context for parsing across buffer boundaries */
+	asn_struct_ctx_t _asn_ctx;
+};
+
 /* ObjectName */
-typedef struct ObjectName {
+typedef struct ObjectName 
+{
 	ObjectName_PR present;
-	union ObjectName_u {
+	union ObjectName_u 
+	{
 		Identifier_t	 vmdspecific;
-		struct ObjectName__domainspecific {
-			Identifier_t	 domainId;
-			Identifier_t	 itemId;
-			
-			/* Context for parsing across buffer boundaries */
-			asn_struct_ctx_t _asn_ctx;
-		} domainspecific;
+		struct ObjectName__domainspecific domainspecific;
 		Identifier_t	 aaspecific;
 	} choice;
 	

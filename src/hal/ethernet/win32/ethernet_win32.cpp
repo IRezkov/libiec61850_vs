@@ -31,17 +31,20 @@
 #include <stdbool.h>
 
 #include <winsock2.h>
-#include <iphlpapi.h>
+#include "myiphlpapi.h"
+
 
 #pragma comment (lib, "IPHLPAPI.lib")
 
 #include "ethernet.h"
+#include <malloc.h>
 
 #define HAVE_REMOTE
 
 #include "pcap.h"
 
-struct sEthernetSocket {
+struct sEthernetSocket 
+{
     pcap_t* rawSocket;
     struct bpf_program etherTypeFilter;
 };
@@ -49,10 +52,13 @@ struct sEthernetSocket {
 
 #define MAX_ADAPTER_ADDRESS_LENGTH      8
 
-typedef struct _IP_ADAPTER_ADDRESSES {
-	union {
+typedef struct _IP_ADAPTER_ADDRESSES 
+{
+	union 
+	{
 		ULONGLONG Alignment;
-		struct {
+		struct 
+		{
 			ULONG Length;
 			DWORD IfIndex;
 		};
@@ -83,7 +89,7 @@ static bool dllLoaded = false;
 static void
 loadDLLs()
 {
-	HINSTANCE hDll = LoadLibrary("iphlpapi.dll");
+	HINSTANCE hDll = LoadLibrary(L"iphlpapi.dll");
 
 	GetAdaptersAddresses = (pgetadaptersaddresses) GetProcAddress(hDll,
 			"GetAdaptersAddresses");
@@ -116,7 +122,7 @@ getInterfaceName(int interfaceIndex)
     for(device = devices; device != NULL; device= device->next)
     {
         if (i == interfaceIndex) {
-            interfaceName = malloc(strlen(device->name) + 1);
+            interfaceName = (char*) malloc(strlen(device->name) + 1);
             strcpy(interfaceName, device->name);
             printf("Use interface (%s)\n", interfaceName);
             ifaceFound = true;
@@ -229,7 +235,7 @@ Ethernet_createSocket(char* interfaceId, uint8_t* destAddress)
         return NULL;
     }
 
-    EthernetSocket ethernetSocket = calloc(1, sizeof(struct sEthernetSocket));
+    EthernetSocket ethernetSocket = (EthernetSocket) calloc(1, sizeof(struct sEthernetSocket));
 
     ethernetSocket->rawSocket = pcapSocket;
 
@@ -253,7 +259,7 @@ Ethernet_sendPacket(EthernetSocket ethSocket, uint8_t* buffer, int packetSize)
 void
 Ethernet_setProtocolFilter(EthernetSocket ethSocket, uint16_t etherType)
 {
-	char* filterString = alloca(100);
+	char* filterString = (char*) alloca(100);
 
 	sprintf(filterString, "(ether proto 0x%04x) or (vlan and ether proto 0x%04x)", etherType, etherType);
 
@@ -273,7 +279,7 @@ Ethernet_receivePacket(EthernetSocket self, uint8_t* buffer, int bufferSize)
 	struct pcap_pkthdr* header;
 	uint8_t* packetData;
 
-	int pcapCode = pcap_next_ex(self->rawSocket, &header, &packetData);
+	int pcapCode = pcap_next_ex(self->rawSocket, &header, (const u_char**) &packetData);
 
 	if (pcapCode > 0) {
 		int packetSize = header->caplen;

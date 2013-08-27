@@ -28,6 +28,11 @@
 
 #include "linked_list.h"
 
+#include "ber_encoder.h"
+#include "mms_access_result.h"
+//int BerEncoder_determineLengthSize(uint32_t length);
+//int BerEncoder_encodeTL(uint8_t tag, uint32_t length, uint8_t* buffer, int bufPos);
+
 /**********************************************************************************************
  * MMS Read Service
  *********************************************************************************************/
@@ -106,7 +111,7 @@ addComplexValueToResultList(MmsTypeSpecification* namedVariable,
 	    int bufLen = strlen(nameIdStr) + strlen(componentName) + sizeof('$')
 	            + 1 /* for string terminator */;
 
-	    char* newNameIdStr = alloca(bufLen);
+	    char* newNameIdStr = (char*) alloca(bufLen);
 
 		createStringInBuffer(newNameIdStr, 3, nameIdStr, "$", componentName);
 
@@ -178,7 +183,7 @@ getComponentOfArrayElement(AlternateAccess_t* alternateAccess, MmsTypeSpecificat
 
         int i;
         for (i = 0; i < elementCount; i++) {
-            if (strncmp (structSpec->typeSpec.structure.elements[i]->name, component.buf,
+            if (strncmp (structSpec->typeSpec.structure.elements[i]->name, (const char*) component.buf,
                     component.size) == 0)
             {
                 MmsValue* value = MmsValue_getElement(structuredValue, i);

@@ -40,7 +40,7 @@ typedef struct sMmsValueCacheEntry {
 MmsValueCache
 MmsValueCache_create(MmsDomain* domain)
 {
-	MmsValueCache self = calloc(1, sizeof(struct sMmsValueCache));
+	MmsValueCache self = (MmsValueCache) calloc(1, sizeof(struct sMmsValueCache));
 
 	self->domain = domain;
 
@@ -54,8 +54,9 @@ MmsValueCache_insertValue(MmsValueCache self, char* itemId, MmsValue* value)
 {
 	MmsTypeSpecification* typeSpec = MmsDomain_getNamedVariable(self->domain, itemId);
 
-	if (typeSpec != NULL) {
-		MmsValueCacheEntry* cacheEntry = malloc(sizeof(MmsValueCacheEntry));
+	if (typeSpec != NULL) 
+	{
+		MmsValueCacheEntry* cacheEntry = (MmsValueCacheEntry*) malloc(sizeof(MmsValueCacheEntry));
 
 		cacheEntry->value = value;
 		cacheEntry->typeSpec = typeSpec;
@@ -156,6 +157,6 @@ cacheEntryDelete(MmsValueCacheEntry* entry)
 void
 MmsValueCache_destroy(MmsValueCache self)
 {
-	Map_deleteDeep(self->map, true, cacheEntryDelete);
+	Map_deleteDeep(self->map, true, (void (__cdecl*)(void*)) cacheEntryDelete);
 	free(self);
 }

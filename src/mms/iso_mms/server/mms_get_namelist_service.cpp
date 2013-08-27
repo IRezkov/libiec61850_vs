@@ -23,6 +23,7 @@
 
 #include "mms_server_internal.h"
 #include "ber_encoder.h"
+#include "ber_decode.h"
 
 
 /**********************************************************************************************
@@ -61,7 +62,7 @@ static char* appendMmsSubVariable(char* name, char* child)
 
     int newSize = nameLen + childLen + 2;
 
-    char* newName = malloc(newSize);
+    char* newName = (char*) malloc(newSize);
 
     int bufPos = 0;
     int i;
@@ -130,7 +131,7 @@ getNameListDomainSpecific(MmsServerConnection* connection, char* domainName) {
 	return nameList;
 }
 
-#ifdef MMS_DATA_SET_SERVICE 1
+#if MMS_DATA_SET_SERVICE == 1
 
 static LinkedList
 createStringsFromNamedVariableList(LinkedList nameList, LinkedList variableLists)
@@ -309,7 +310,7 @@ mmsServer_handleGetNameListRequest(
 		uint8_t tag = buffer[bufPos++];
 		uint32_t length;
 
-		bufPos = BerDecoder_decodeLength(buffer, &length, bufPos, maxBufPos);
+		bufPos = BerDecoder_decodeLength(buffer, (int*) &length, bufPos, maxBufPos);
 
 		if (bufPos < 0)  {
 			//writeMmsRejectPdu(&invokeId, REJECT_UNRECOGNIZED_SERVICE, response);
@@ -327,7 +328,7 @@ mmsServer_handleGetNameListRequest(
 		case 0xa1: /* objectScope */
 			{
 				uint8_t objectScopeTag = buffer[bufPos++];
-				bufPos = BerDecoder_decodeLength(buffer, &length, bufPos, maxBufPos);
+				bufPos = BerDecoder_decodeLength(buffer, (int*) &length, bufPos, maxBufPos);
 
 				switch (objectScopeTag) {
 				case 0x80: /* vmd-specific */
@@ -335,7 +336,7 @@ mmsServer_handleGetNameListRequest(
 					break;
 				case 0x81: /* domain-specific */
 				    domainIdLength = length;
-					domainId = buffer + bufPos;
+					domainId = (char*) buffer + bufPos;
 					objectScope = OBJECT_SCOPE_DOMAIN;
 					break;
 				case 0x82: /* association-specific */
@@ -346,7 +347,7 @@ mmsServer_handleGetNameListRequest(
 			break;
 
 		case 0x82: /* continueAfter */
-			continueAfter = buffer + bufPos;
+			continueAfter = (char*) buffer + bufPos;
 			continueAfterLength = length;
 			break;
 		}
@@ -358,7 +359,7 @@ mmsServer_handleGetNameListRequest(
 	char* continueAfterId = NULL;
 
 	if (continueAfter != NULL) {
-		continueAfterId = alloca(continueAfterLength + 1);
+		continueAfterId = (char*) alloca(continueAfterLength + 1);
 		memcpy(continueAfterId, continueAfter, continueAfterLength);
 		continueAfterId[continueAfterLength] = 0;
 
@@ -368,7 +369,7 @@ mmsServer_handleGetNameListRequest(
 
 	if (objectScope == OBJECT_SCOPE_DOMAIN) {
 
-		char* domainSpecificName = alloca(domainIdLength + 1);
+		char* domainSpecificName = (char*) alloca(domainIdLength + 1);
 		memcpy(domainSpecificName, domainId, domainIdLength);
 		domainSpecificName[domainIdLength] = 0;
 

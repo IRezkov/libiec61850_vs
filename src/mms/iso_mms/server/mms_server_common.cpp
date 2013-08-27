@@ -28,13 +28,13 @@ int
 mmsServer_write_out(const void *buffer, size_t size, void *app_key)
 {
     ByteBuffer* writeBuffer = (ByteBuffer*) app_key;
-    return ByteBuffer_append(writeBuffer, buffer, size);
+    return ByteBuffer_append(writeBuffer, (uint8_t*) buffer, size);
 }
 
 MmsPdu_t*
 mmsServer_createConfirmedResponse(int invokeId)
 {
-	MmsPdu_t* mmsPdu = calloc(1, sizeof(MmsPdu_t));
+	MmsPdu_t* mmsPdu = (MmsPdu_t*) calloc(1, sizeof(MmsPdu_t));
 
 	mmsPdu->present = MmsPdu_PR_confirmedResponsePdu;
 
@@ -48,7 +48,7 @@ mmsServer_createConfirmedResponse(int invokeId)
 void
 mmsServer_createConfirmedErrorPdu(int invokeId, ByteBuffer* response, MmsConfirmedErrorType errorType)
 {
-	MmsPdu_t* mmsPdu = calloc(1, sizeof(MmsPdu_t));
+	MmsPdu_t* mmsPdu = (MmsPdu_t*) calloc(1, sizeof(MmsPdu_t));
 	mmsPdu->present = MmsPdu_PR_confirmedErrorPDU;
 
 	asn_long2INTEGER(&(mmsPdu->choice.confirmedErrorPDU.invokeID),

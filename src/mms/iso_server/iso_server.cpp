@@ -128,7 +128,7 @@ IsoServer_startListening(IsoServer self)
 
     Thread_start(self->serverThread);
 
-    while (self->state == ISO_SVR_STATE_IDLE)
+	while ((self->state == ISO_SVR_STATE_IDLE) || (self->state == ISO_SVR_STATE_STOPPED))
         Thread_sleep(1);
 
     if (DEBUG)

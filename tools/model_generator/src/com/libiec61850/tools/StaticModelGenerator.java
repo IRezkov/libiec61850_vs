@@ -152,7 +152,7 @@ public class StaticModelGenerator {
 
         String icdFile = args[0];
         
-        String defaultCFileName = "static_model.c";
+        String defaultCFileName = "static_model.cpp";
         String defaultHFileName = "static_model.h";
         
         PrintStream cOutStream = new PrintStream(new FileOutputStream(new File(defaultCFileName)));
@@ -439,23 +439,23 @@ public class StaticModelGenerator {
 
     private void printForwardDeclarations(Server server) {
         
-        cOut.println("IedModel iedModel;");
-        cOut.println("static DataSet* datasets[];");
-        cOut.println("static ReportControlBlock* reportControlBlocks[];");
-        cOut.println("static GSEControlBlock* gseControlBlocks[];");
+        cOut.println("extern IedModel iedModel;");
+        cOut.println("extern DataSet* datasets[];");
+        cOut.println("extern ReportControlBlock* reportControlBlocks[];");
+        cOut.println("extern GSEControlBlock* gseControlBlocks[];");
         cOut.println("static void initializeValues();");
         hOut.println("extern IedModel iedModel;");
         
         for (LogicalDevice logicalDevice : server.getLogicalDevices()) {
             String ldName = "iedModel_" + logicalDevice.getInst();
 
-            cOut.println("LogicalDevice " + ldName + ";");
+            cOut.println("extern LogicalDevice " + ldName + ";");
             hOut.println("extern LogicalDevice " + ldName + ";");
 
             for (LogicalNode logicalNode : logicalDevice.getLogicalNodes()) {
                 String lnName = ldName + "_" + logicalNode.getName();
 
-                cOut.println("LogicalNode   " + lnName + ";");
+                cOut.println("extern LogicalNode   " + lnName + ";");
                 hOut.println("extern LogicalNode   " + lnName + ";");
 
                 printDataObjectForwardDeclarations(lnName,
@@ -470,7 +470,7 @@ public class StaticModelGenerator {
         for (DataObject dataObject : dataObjects) {
             String doName = prefix + "_" + dataObject.getName();
 
-            cOut.println("DataObject    " + doName + ";");
+            cOut.println("extern DataObject    " + doName + ";");
             hOut.println("extern DataObject    " + doName + ";");
 
             if (dataObject.getSubDataObjects() != null) {
@@ -488,7 +488,7 @@ public class StaticModelGenerator {
         for (DataAttribute dataAttribute : dataAttributes) {
             String daName = doName + "_" + dataAttribute.getName();
 
-            cOut.println("DataAttribute " + daName + ";");
+            cOut.println("extern DataAttribute " + daName + ";");
             hOut.println("extern DataAttribute " + daName + ";");
 
             if (dataAttribute.getSubDataAttributes() != null)
@@ -500,7 +500,7 @@ public class StaticModelGenerator {
     private void printCFileHeader(String filename) {
 
         cOut.println("/*");
-        cOut.println(" * static_model.c");
+        cOut.println(" * static_model.cpp");
         cOut.println(" *");
         cOut.println(" * automatically generated from " + filename);
         cOut.println(" */");

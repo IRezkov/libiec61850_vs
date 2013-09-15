@@ -30,6 +30,8 @@
 #include "mms_client_connection.h"
 #include "mms_mapping.h"
 
+#include <malloc.h>
+
 typedef enum eIedState {
     IED_STATE_IDLE,
     IED_STATE_CONNECTED
@@ -85,7 +87,7 @@ mapMmsErrorToIedError(MmsClientError mmsError)
 ICLogicalDevice*
 ICLogicalDevice_create(char* name)
 {
-    ICLogicalDevice* self = calloc(1, sizeof(struct sICLogicalDevice));
+    ICLogicalDevice* self = (ICLogicalDevice*) calloc(1, sizeof(struct sICLogicalDevice));
 
     self->name = copyString(name);
 
@@ -134,7 +136,7 @@ toMmsItemId(char* itemId)
 ClientDataSet
 ClientDataSet_create(char* dataSetReference)
 {
-    ClientDataSet self = calloc(1, sizeof(struct sClientDataSet));
+    ClientDataSet self = (ClientDataSet) calloc(1, sizeof(struct sClientDataSet));
 
     self->dataSetReference = copyString(dataSetReference);
     toMmsItemId(self->dataSetReference);
@@ -175,7 +177,7 @@ ClientDataSet_getDataSetSize(ClientDataSet self)
 ClientReport
 ClientReport_create(ClientDataSet dataSet)
 {
-    ClientReport self = calloc(1, sizeof(struct sClientReport));
+    ClientReport self = (ClientReport) calloc(1, sizeof(struct sClientReport));
 
     self->dataSet = dataSet;
 
@@ -304,7 +306,7 @@ cleanup_and_return:
 IedConnection
 IedConnection_create()
 {
-    IedConnection self = calloc(1, sizeof(struct sIedConnection));
+    IedConnection self = (IedConnection) calloc(1, sizeof(struct sIedConnection));
 
     self->enabledReports = LinkedList_create();
     self->logicalDevices = NULL;
@@ -353,10 +355,10 @@ IedConnection_destroy(IedConnection self)
     IedConnection_close(self);
 
     if (self->logicalDevices != NULL)
-    	LinkedList_destroyDeep(self->logicalDevices, ICLogicalDevice_destroy);
+    	LinkedList_destroyDeep(self->logicalDevices, (void (__cdecl *)(void *)) ICLogicalDevice_destroy);
 
     if (self->enabledReports != NULL)
-    	LinkedList_destroyDeep(self->enabledReports, ClientReport_destroy);
+    	LinkedList_destroyDeep(self->enabledReports, (void (__cdecl *)(void *)) ClientReport_destroy);
 
     free(self);
 }
@@ -434,7 +436,7 @@ IedConnection_getDeviceModelFromServer(IedConnection self, IedClientError* error
     if (logicalDeviceNames != NULL) {
 
     	if (self->logicalDevices != NULL) {
-			LinkedList_destroyDeep(self->logicalDevices, ICLogicalDevice_destroy);
+			LinkedList_destroyDeep(self->logicalDevices, (void (__cdecl *)(void *)) ICLogicalDevice_destroy);
 			self->logicalDevices = NULL;
     	}
 
@@ -539,7 +541,7 @@ IedConnection_getLogicalDeviceDirectory(IedConnection self, IedClientError* erro
             	char* variableName = (char*) variable->data;
 
             	if (strchr(variableName, '$') == NULL)
-            		LinkedList_add(logicalNodeNames, copyString(variable->data));
+            		LinkedList_add(logicalNodeNames, copyString((char*) variable->data));
 
                 variable = LinkedList_getNext(variable);
             }
@@ -561,7 +563,7 @@ addToStringSet(LinkedList set, char* string)
 	LinkedList element = set;
 
 	while (LinkedList_getNext(element) != NULL) {
-		if (strcmp(LinkedList_getNext(element)->data, string) == 0)
+		if (strcmp((const char*) LinkedList_getNext(element)->data, string) == 0)
 			return false;
 
 		element = LinkedList_getNext(element);
@@ -614,7 +616,7 @@ IedConnection_getLogicalNodeDirectory(IedConnection self, IedClientError* error,
 
 	int lnRefLen = strlen(logicalNodeReference);
 
-	char* lnRefCopy = alloca(lnRefLen + 1);
+	char* lnRefCopy = (char*) alloca(lnRefLen + 1);
 
 	strcpy(lnRefCopy, logicalNodeReference);
 
@@ -753,7 +755,7 @@ IedConnection_getLogicalNodeVariables(IedConnection self, IedClientError* error,
 
 	int lnRefLen = strlen(logicalNodeReference);
 
-	char* lnRefCopy = alloca(lnRefLen + 1);
+	char* lnRefCopy = (char*) alloca(lnRefLen + 1);
 
 	strcpy(lnRefCopy, logicalNodeReference);
 
@@ -835,7 +837,7 @@ IedConnection_getDataDirectory(IedConnection self, IedClientError* error,
 {
 	int dataRefLen = strlen(dataReference);;
 
-	char* dataRefCopy = alloca(dataRefLen + 1);
+	char* dataRefCopy = (char*) alloca(dataRefLen + 1);
 
 	strcpy(dataRefCopy, dataReference);
 
@@ -962,7 +964,7 @@ IedConnection_getDataSet(IedConnection self, IedClientError* error, char* dataSe
     char* domainId;
     char* itemId;
 
-    domainId = alloca(129);
+    domainId = (char*) alloca(129);
 
     domainId = MmsMapping_getMmsDomainFromObjectReference(dataSetReference, domainId);
 
@@ -1009,8 +1011,8 @@ IedConnection_enableReporting(IedConnection self, IedClientError* error,
 
     MmsClientError mmsError;
 
-    domainId = alloca(129);
-    itemId = alloca(129);
+    domainId = (char*) alloca(129);
+    itemId = (char*) alloca(129);
 
     domainId = MmsMapping_getMmsDomainFromObjectReference(rcbReference, domainId);
 
@@ -1024,7 +1026,7 @@ IedConnection_enableReporting(IedConnection self, IedClientError* error,
 
     // check if data set is matching
     strcpy(itemId + itemIdLen, "$DatSet");
-    MmsValue* datSet = MmsConnection_readVariable(self->connection, &error, domainId, itemId);
+    MmsValue* datSet = MmsConnection_readVariable(self->connection, (MmsClientError *) &error, domainId, itemId);
 
     if (datSet != NULL) {
 
@@ -1146,8 +1148,8 @@ IedConnection_disableReporting(IedConnection self, IedClientError* error, char* 
     char* domainId;
     char* itemId;
 
-    domainId = alloca(129);
-    itemId = alloca(129);
+    domainId = (char*) alloca(129);
+    itemId = (char*) alloca(129);
 
     domainId = MmsMapping_getMmsDomainFromObjectReference(rcbReference, domainId);
 

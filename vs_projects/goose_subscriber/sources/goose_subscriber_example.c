@@ -64,5 +64,6 @@ main(int argc, char** argv)
 
     GooseSubscriber_destroy(subscriber);
 
+	printf("I've done all work. Press any key...");
 	getche();
 }

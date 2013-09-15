@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
-	Name="example1__server"
+	Version="8,00"
+	Name="goose_subscriber"
 	ProjectGUID="{85B88F65-A2D6-4287-BBCD-28E106047199}"
 	RootNamespace="example1__"
 	Keyword="Win32Proj"

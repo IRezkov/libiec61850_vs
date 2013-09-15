@@ -66,7 +66,8 @@ controlListener(void* parameter, MmsValue* value)
         IedServer_updateAttributeValue(iedServer, IEDMODEL_GenericIO_GGIO1_SPCSO4_stVal, value);
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv) 
+{
 
 	iedServer = IedServer_create(&iedModel);
 
@@ -85,7 +86,8 @@ int main(int argc, char** argv) {
 	IedServer_setControlHandler(iedServer, IEDMODEL_GenericIO_GGIO1_SPCSO4, (ControlHandler) controlListener,
 	            IEDMODEL_GenericIO_GGIO1_SPCSO4);
 
-	if (!IedServer_isRunning(iedServer)) {
+	if (!IedServer_isRunning(iedServer)) 
+	{
 		printf("Starting server failed! Exit.\n");
 		IedServer_destroy(iedServer);
 		exit(-1);
@@ -107,4 +109,4 @@ int main(int argc, char** argv) {
 
 	/* Cleanup - free all resources */
 	IedServer_destroy(iedServer);
-} /* main() */
+}

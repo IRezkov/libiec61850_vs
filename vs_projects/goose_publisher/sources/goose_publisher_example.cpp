@@ -14,6 +14,7 @@
 
 #include <conio.h>
 
+
 // has to be executed as root!
 int
 main(int argc, char** argv)
@@ -44,6 +45,7 @@ main(int argc, char** argv)
 
 	GoosePublisher_destroy(publisher);
 
+	printf("I've done all work. Press any key...");
 	getche();
 }
 

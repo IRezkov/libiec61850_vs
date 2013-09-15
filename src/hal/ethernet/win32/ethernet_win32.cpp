@@ -124,7 +124,7 @@ getInterfaceName(int interfaceIndex)
         if (i == interfaceIndex) {
             interfaceName = (char*) malloc(strlen(device->name) + 1);
             strcpy(interfaceName, device->name);
-            printf("Use interface (%s)\n", interfaceName);
+            printf("I am using interface (%s)...\n", interfaceName);
             ifaceFound = true;
             break;
         }
